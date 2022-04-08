@@ -1,0 +1,3983 @@
+{
+
+	"Main Function": {
+		"prefix": ["Main GLSL Fragment Shader Function"],
+		"body": [
+			"void main (void) {",
+			"\t",
+			"\tgl_FragColor = $1",
+			"\t",
+			"}"
+		],
+		"description": "Entry function called upon shader initialization."
+	},
+
+	////////////
+	// Credit //
+	////////////
+
+	"Fractal Teapot Credit": {
+		"prefix": ["Fractal Teapot Credit"],
+		"body": [
+			"/*",
+			"   ___  __        __  ___              ___  ___       __   __  ___ ",
+			"  |__  |__)  /\\  /  `  |   /\\  |        |  |__   /\\  |__) /  \\  |",
+			"  |    |  \\ /--\\ \\__,  |  /--\\ |___     |  |___ /--\\ |    \\__/  |  ",
+			"",
+			"  The MIT License",
+			"  Copyright © $CURRENT_YEAR Jamie Perrelet",
+			"  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+			"",
+			"  www.fractalteapot.com",
+			"",
+			"  Here's a handful of random numbers to get you started: $RANDOM.$RANDOM, $RANDOM.$RANDOM, $RANDOM.$RANDOM, $RANDOM.$RANDOM",
+			"  A nonsense palette: $RANDOM_HEX, $RANDOM_HEX, $RANDOM_HEX",
+			"  And a uuid to boot: $UUID ",
+			"",
+			"*/",
+		],
+		"description": "Deep breath... And... Begin."
+	},
+
+	////////////
+	// Macros //
+	////////////
+
+	"Macro: Small Random Float": {
+		"prefix": ["*rnd S"],
+		"body": [
+			"0.000$RANDOM",
+		],
+		"description": "Base 10 random number of form 0.000######."
+	},
+
+	"Macro: Random Float": {
+		"prefix": ["*rnd", "*rnd float"],
+		"body": [
+			"0.$RANDOM",
+		],
+		"description": "Base 10 random number of form 0.######."
+	},
+
+	"Macro: Large Random Float": {
+		"prefix": ["*rnd L"],
+		"body": [
+			"$RANDOM.$RANDOM",
+		],
+		"description": "Base 10 random number of form ######.######."
+	},
+
+	"Macro: Random Vector 2": {
+		"prefix": ["*rnd 2", "*rnd vec2"],
+		"body": [
+			"vec2(0.$RANDOM, 0.$RANDOM)",
+		],
+		"description": "Pair of base 10 random numbers, each of form 0.######."
+	},
+
+
+	//
+
+	"Macro: Random Vector 3": {
+		"prefix": ["*rnd 3", "*rnd vec3"],
+		"body": [
+			"vec3(0.$RANDOM, 0.$RANDOM, 0.$RANDOM)",
+		],
+		"description": "Triplet of base 10 random numbers, each of form 0.######."
+	},
+
+	"Macro: Random Vector 4": {
+		"prefix": ["*rnd 4", "*rnd vec4"],
+		"body": [
+			"vec4(0.$RANDOM, 0.$RANDOM, 0.$RANDOM, 0.$RANDOM)",
+		],
+		"description": "Quadruplet of base 10 random numbers, each of form 0.######."
+	},
+
+	//////////////////
+	// Constructors //
+	//////////////////
+
+	"Constructor: vec2": {
+		"prefix": ["vec2", "-v2"],
+		"body": [
+			"vec2($1, $2)",
+		],
+		"description": "Constructs a vec2 object."
+	},
+
+	"Constructor: vec3": {
+		"prefix": ["vec3", "-v3"],
+		"body": [
+			"vec3($1, $2, $3)",
+		],
+		"description": "Constructs a vec3 object."
+	},
+
+	"Constructor: vec4": {
+		"prefix": ["vec4", "-v4"],
+		"body": [
+			"vec4($1, $2, $3, $4)",
+		],
+		"description": "Constructs a vec4 object."
+	},
+
+	"Constructor: mat2": {
+		"prefix": ["mat2", "-m2"],
+		"body": [
+			"mat2($1, $2, $3, $4)",
+		],
+		"description": "Constructs a mat2 object."
+	},
+
+	"Constructor: mat3": {
+		"prefix": ["mat3", "-m3"],
+		"body": [
+			"mat3($1, $2, $3",
+			"     $4, $5, $6",
+			"     $7, $8, $9)",
+		],
+		"description": "Constructs a mat3 object."
+	},
+
+	///////////////
+	// Functions //
+	///////////////
+
+	"Function: mix": {
+		"prefix": ["mix", "-x"],
+		"body": [
+			"mix($1, $2, $3)",
+		],
+		"description": "mix(start, end, value)"
+	},
+
+	//////////////
+	// Uniforms //
+	//////////////
+
+	"Uniform: tex0": {
+		"prefix": ["_tex0"],
+		"body": [
+			"uniform sampler2D tex0;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: texBB": {
+		"prefix": ["_texBB"],
+		"body": [
+			"uniform texBB sampler2D;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: param1": {
+		"prefix": ["_p1"],
+		"body": [
+			"uniform float param1;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: param[1-4]": {
+		"prefix": ["_p[1-4]"],
+		"body": [
+			"uniform float param1, param2, param3, param4;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: param[1-8]": {
+		"prefix": ["_p[1-8]"],
+		"body": [
+			"uniform float param1, param2, param3, param4, param5, param6, param7, param8;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: param[1-16]": {
+		"prefix": ["_p[1-16]"],
+		"body": [
+			"uniform float param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, param12, param13, param14, param15, param16;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: pos1": {
+		"prefix": ["_pos1"],
+		"body": [
+			"uniform vec4 pos1;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: vpos1": {
+		"prefix": ["_vpos1"],
+		"body": [
+			"uniform vec4 vpos1;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: apos1": {
+		"prefix": ["_apos1"],
+		"body": [
+			"uniform vec4 apos1;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: uRes": {
+		"prefix": ["_uRes"],
+		"body": [
+			"uniform vec2 uRes;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: uSeed": {
+		"prefix": ["_uSeed"],
+		"body": [
+			"uniform vec4 uSeed; // run, frame, pass, 0.0",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: uTime": {
+		"prefix": ["_uTime"],
+		"body": [
+			"uniform float uTime;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	"Uniform: color1": {
+		"prefix": ["_color1"],
+		"body": [
+			"uniform vec4 color1;",
+			""
+		],
+		"description": "Uniform variable."
+	},
+
+	/////////////////
+	// Blend Modes //
+	/////////////////
+
+	"Blend Mode: All": {
+		"prefix": ["All Blend Modes"],
+		"body": [
+			"vec3 blendAdd(vec3 base, vec3 blend) { return min(base+blend,vec3(1.0)); }",
+			"vec3 blendAdd(vec3 base, vec3 blend, float opacity) { return (blendAdd(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendAverage(vec3 base, vec3 blend) { return (base+blend)/2.0; }",
+			"vec3 blendAverage(vec3 base, vec3 blend, float opacity) { return (blendAverage(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendColorBurn(float base, float blend) { return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend) { return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b)); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) { return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendColorDodge(float base, float blend) { return (blend==1.0)?blend:min(base/(1.0-blend),1.0); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend) { return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b)); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) { return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendDarken(float base, float blend) { return min(blend,base); }",
+			"vec3 blendDarken(vec3 base, vec3 blend) { return vec3(blendDarken(base.r,blend.r),blendDarken(base.g,blend.g),blendDarken(base.b,blend.b)); }",
+			"vec3 blendDarken(vec3 base, vec3 blend, float opacity) { return (blendDarken(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendDifference(vec3 base, vec3 blend) { return abs(base-blend); }",
+			"vec3 blendDifference(vec3 base, vec3 blend, float opacity) { return (blendDifference(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendExclusion(vec3 base, vec3 blend) { return base+blend-2.0*base*blend; }",
+			"vec3 blendExclusion(vec3 base, vec3 blend, float opacity) { return (blendExclusion(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendReflect(float base, float blend) { return (blend==1.0)?blend:min(base*base/(1.0-blend),1.0); } ",
+			"vec3 blendReflect(vec3 base, vec3 blend) { return vec3(blendReflect(base.r,blend.r),blendReflect(base.g,blend.g),blendReflect(base.b,blend.b)); } ",
+			"vec3 blendReflect(vec3 base, vec3 blend, float opacity) { return (blendReflect(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendGlow(vec3 base, vec3 blend) { return blendReflect(blend,base); }",
+			"vec3 blendGlow(vec3 base, vec3 blend, float opacity) { return (blendGlow(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendOverlay(float base, float blend) { return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend)); }",
+			"vec3 blendOverlay(vec3 base, vec3 blend) { return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b)); }",
+			"vec3 blendOverlay(vec3 base, vec3 blend, float opacity) { return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendHardLight(vec3 base, vec3 blend) { return blendOverlay(blend,base); }",
+			"vec3 blendHardLight(vec3 base, vec3 blend, float opacity) { return (blendHardLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendVividLight(float base, float blend) { return (blend<0.5)?blendColorBurn(base,(2.0*blend)):blendColorDodge(base,(2.0*(blend-0.5))); }",
+			"vec3 blendVividLight(vec3 base, vec3 blend) { return vec3(blendVividLight(base.r,blend.r),blendVividLight(base.g,blend.g),blendVividLight(base.b,blend.b)); }",
+			"vec3 blendVividLight(vec3 base, vec3 blend, float opacity) { return (blendVividLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendHardMix(float base, float blend) { return (blendVividLight(base,blend)<0.5)?0.0:1.0; }",
+			"vec3 blendHardMix(vec3 base, vec3 blend) { return vec3(blendHardMix(base.r,blend.r),blendHardMix(base.g,blend.g),blendHardMix(base.b,blend.b)); }",
+			"vec3 blendHardMix(vec3 base, vec3 blend, float opacity) { return (blendHardMix(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendLighten(float base, float blend) { return max(blend,base); }",
+			"vec3 blendLighten(vec3 base, vec3 blend) { return vec3(blendLighten(base.r,blend.r),blendLighten(base.g,blend.g),blendLighten(base.b,blend.b)); }",
+			"vec3 blendLighten(vec3 base, vec3 blend, float opacity) { return (blendLighten(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendLinearBurn(float base, float blend) { return max(base+blend-1.0,0.0); /* Note : Same implementation as BlendSubtractf */ }",
+			"vec3 blendLinearBurn(vec3 base, vec3 blend) { return max(base+blend-vec3(1.0),vec3(0.0)); /* Note : Same implementation as BlendSubtract */ }",
+			"vec3 blendLinearBurn(vec3 base, vec3 blend, float opacity) { return (blendLinearBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendLinearDodge(float base, float blend) { return min(base+blend,1.0); /* Note : Same implementation as BlendAddf */ }",
+			"vec3 blendLinearDodge(vec3 base, vec3 blend) { return min(base+blend,vec3(1.0)); /* Note : Same implementation as BlendAdd */ }",
+			"vec3 blendLinearDodge(vec3 base, vec3 blend, float opacity) { return (blendLinearDodge(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendLinearLight(float base, float blend) { return blend<0.5?blendLinearBurn(base,(2.0*blend)):blendLinearDodge(base,(2.0*(blend-0.5))); }",
+			"vec3 blendLinearLight(vec3 base, vec3 blend) { return vec3(blendLinearLight(base.r,blend.r),blendLinearLight(base.g,blend.g),blendLinearLight(base.b,blend.b)); }",
+			"vec3 blendLinearLight(vec3 base, vec3 blend, float opacity) { return (blendLinearLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendMultiply(vec3 base, vec3 blend) { return base*blend; }",
+			"vec3 blendMultiply(vec3 base, vec3 blend, float opacity) { return (blendMultiply(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendNegation(vec3 base, vec3 blend) { return vec3(1.0)-abs(vec3(1.0)-base-blend); }",
+			"vec3 blendNegation(vec3 base, vec3 blend, float opacity) { return (blendNegation(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendNormal(vec3 base, vec3 blend) { return blend; }",
+			"vec3 blendNormal(vec3 base, vec3 blend, float opacity) { return (blendNormal(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendPhoenix(vec3 base, vec3 blend) { return min(base,blend)-max(base,blend)+vec3(1.0); }",
+			"vec3 blendPhoenix(vec3 base, vec3 blend, float opacity) { return (blendPhoenix(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendPinLight(float base, float blend) { return (blend<0.5)?blendDarken(base,(2.0*blend)):blendLighten(base,(2.0*(blend-0.5))); }",
+			"vec3 blendPinLight(vec3 base, vec3 blend) { return vec3(blendPinLight(base.r,blend.r),blendPinLight(base.g,blend.g),blendPinLight(base.b,blend.b)); }",
+			"vec3 blendPinLight(vec3 base, vec3 blend, float opacity) { return (blendPinLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendScreen(float base, float blend) { return 1.0-((1.0-base)*(1.0-blend)); }",
+			"vec3 blendScreen(vec3 base, vec3 blend) { return vec3(blendScreen(base.r,blend.r),blendScreen(base.g,blend.g),blendScreen(base.b,blend.b)); }",
+			"vec3 blendScreen(vec3 base, vec3 blend, float opacity) { return (blendScreen(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendSoftLight(float base, float blend) { return (blend<0.5)?(2.0*base*blend+base*base*(1.0-2.0*blend)):(sqrt(base)*(2.0*blend-1.0)+2.0*base*(1.0-blend)); }",
+			"vec3 blendSoftLight(vec3 base, vec3 blend) { return vec3(blendSoftLight(base.r,blend.r),blendSoftLight(base.g,blend.g),blendSoftLight(base.b,blend.b)); } ",
+			"vec3 blendSoftLight(vec3 base, vec3 blend, float opacity) { return (blendSoftLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendSubstract(float base, float blend) { return max(base+blend-1.0,0.0); }",
+			"vec3 blendSubstract(vec3 base, vec3 blend) { return max(base+blend-vec3(1.0),vec3(0.0)); }",
+			"vec3 blendSubstract(vec3 base, vec3 blend, float opacity) { return (blendSubstract(base, blend) * opacity + blend * (1.0 - opacity)); }",
+			"",
+			"#define BLEND_MODE blendAdd",
+			"",
+			"",
+		],
+		"description": "Additive blend mode."
+	},
+
+	"Blend Mode: Add": {
+		"prefix": ["Add Blend Mode"],
+		"body": [
+			"vec3 blendAdd(vec3 base, vec3 blend) { return min(base+blend,vec3(1.0)); }",
+			"vec3 blendAdd(vec3 base, vec3 blend, float opacity) { return (blendAdd(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Additive blend mode."
+	},
+
+	"Blend Mode: Average": {
+		"prefix": ["Average Blend Mode"],
+		"body": [
+			"vec3 blendAverage(vec3 base, vec3 blend) { return (base+blend)/2.0; }",
+			"vec3 blendAverage(vec3 base, vec3 blend, float opacity) { return (blendAverage(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Average blend mode."
+	},
+
+	"Blend Mode: Color Burn": {
+		"prefix": ["Color Burn Blend Mode"],
+		"body": [
+			"float blendColorBurn(float base, float blend) { return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend) { return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b)); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) { return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Color burn blend mode."
+	},
+
+	"Blend Mode: Color Dodge": {
+		"prefix": ["Color Dodge Blend Mode"],
+		"body": [
+			"float blendColorDodge(float base, float blend) { return (blend==1.0)?blend:min(base/(1.0-blend),1.0); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend) { return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b)); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) { return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Color dodge blend mode."
+	},
+
+	"Blend Mode: Darken": {
+		"prefix": ["Darken Blend Mode"],
+		"body": [
+			"float blendDarken(float base, float blend) { return min(blend,base); }",
+			"vec3 blendDarken(vec3 base, vec3 blend) { return vec3(blendDarken(base.r,blend.r),blendDarken(base.g,blend.g),blendDarken(base.b,blend.b)); }",
+			"vec3 blendDarken(vec3 base, vec3 blend, float opacity) { return (blendDarken(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Darken blend mode."
+	},
+
+	"Blend Mode: Difference": {
+		"prefix": ["Difference Blend Mode"],
+		"body": [
+			"vec3 blendDifference(vec3 base, vec3 blend) { return abs(base-blend); }",
+			"vec3 blendDifference(vec3 base, vec3 blend, float opacity) { return (blendDifference(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Difference blend mode."
+	},
+
+	"Blend Mode: Exclusion": {
+		"prefix": ["Exclusion Blend Mode"],
+		"body": [
+			"vec3 blendExclusion(vec3 base, vec3 blend) { return base+blend-2.0*base*blend; }",
+			"vec3 blendExclusion(vec3 base, vec3 blend, float opacity) { return (blendExclusion(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Exclusion blend mode."
+	},
+
+	"Blend Mode: Glow": {
+		"prefix": ["Glow Blend Mode"],
+		"body": [
+			"float blendReflect(float base, float blend) { return (blend==1.0)?blend:min(base*base/(1.0-blend),1.0); } ",
+			"vec3 blendReflect(vec3 base, vec3 blend) { return vec3(blendReflect(base.r,blend.r),blendReflect(base.g,blend.g),blendReflect(base.b,blend.b)); } ",
+			"vec3 blendReflect(vec3 base, vec3 blend, float opacity) { return (blendReflect(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendGlow(vec3 base, vec3 blend) { return blendReflect(blend,base); }",
+			"vec3 blendGlow(vec3 base, vec3 blend, float opacity) { return (blendGlow(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Glow blend mode."
+	},
+
+	"Blend Mode: Hard Light": {
+		"prefix": ["Hard Light Blend Mode"],
+		"body": [
+			"float blendOverlay(float base, float blend) { return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend)); }",
+			"vec3 blendOverlay(vec3 base, vec3 blend) { return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b)); }",
+			"vec3 blendOverlay(vec3 base, vec3 blend, float opacity) { return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"vec3 blendHardLight(vec3 base, vec3 blend) { return blendOverlay(blend,base); }",
+			"vec3 blendHardLight(vec3 base, vec3 blend, float opacity) { return (blendHardLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Hard light blend mode."
+	},
+
+	"Blend Mode: Hard Mix": {
+		"prefix": ["Hard Mix Blend Mode"],
+		"body": [
+			"float blendColorBurn(float base, float blend) { return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend) { return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b)); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) { return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendColorDodge(float base, float blend) { return (blend==1.0)?blend:min(base/(1.0-blend),1.0); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend) { return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b)); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) { return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity)); }",			
+			"float blendVividLight(float base, float blend) { return (blend<0.5)?blendColorBurn(base,(2.0*blend)):blendColorDodge(base,(2.0*(blend-0.5))); }",
+			"vec3 blendVividLight(vec3 base, vec3 blend) { return vec3(blendVividLight(base.r,blend.r),blendVividLight(base.g,blend.g),blendVividLight(base.b,blend.b)); }",
+			"vec3 blendVividLight(vec3 base, vec3 blend, float opacity) { return (blendVividLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendHardMix(float base, float blend) { return (blendVividLight(base,blend)<0.5)?0.0:1.0; }",
+			"vec3 blendHardMix(vec3 base, vec3 blend) { return vec3(blendHardMix(base.r,blend.r),blendHardMix(base.g,blend.g),blendHardMix(base.b,blend.b)); }",
+			"vec3 blendHardMix(vec3 base, vec3 blend, float opacity) { return (blendHardMix(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Hard mix blend mode."
+	},
+
+	"Blend Mode: Lighten": {
+		"prefix": ["Lighten Blend Mode"],
+		"body": [
+			"float blendLighten(float base, float blend) { return max(blend,base); }",
+			"vec3 blendLighten(vec3 base, vec3 blend) { return vec3(blendLighten(base.r,blend.r),blendLighten(base.g,blend.g),blendLighten(base.b,blend.b)); }",
+			"vec3 blendLighten(vec3 base, vec3 blend, float opacity) { return (blendLighten(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Lighten blend mode."
+	},
+
+	"Blend Mode: Linear Burn": {
+		"prefix": ["Linear Burn Blend Mode"],
+		"body": [
+			"float blendLinearBurn(float base, float blend) { return max(base+blend-1.0,0.0); /* Note : Same implementation as BlendSubtractf */ }",
+			"vec3 blendLinearBurn(vec3 base, vec3 blend) { return max(base+blend-vec3(1.0),vec3(0.0)); /* Note : Same implementation as BlendSubtract */ }",
+			"vec3 blendLinearBurn(vec3 base, vec3 blend, float opacity) { return (blendLinearBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Linear burn blend mode."
+	},
+
+	"Blend Mode: Linear Dodge": {
+		"prefix": ["Linear Dodge Blend Mode"],
+		"body": [
+			"float blendLinearDodge(float base, float blend) { return min(base+blend,1.0); /* Note : Same implementation as BlendAddf */ }",
+			"vec3 blendLinearDodge(vec3 base, vec3 blend) { return min(base+blend,vec3(1.0)); /* Note : Same implementation as BlendAdd */ }",
+			"vec3 blendLinearDodge(vec3 base, vec3 blend, float opacity) { return (blendLinearDodge(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Linear dodge blend mode."
+	},
+
+	"Blend Mode: Linear Light": {
+		"prefix": ["Linear Light Blend Mode"],
+		"body": [
+			"float blendLinearDodge(float base, float blend) { return min(base+blend,1.0); /* Note : Same implementation as BlendAddf */ }",
+			"vec3 blendLinearDodge(vec3 base, vec3 blend) { return min(base+blend,vec3(1.0)); /* Note : Same implementation as BlendAdd */ }",
+			"vec3 blendLinearDodge(vec3 base, vec3 blend, float opacity) { return (blendLinearDodge(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendLinearBurn(float base, float blend) { return max(base+blend-1.0,0.0); /* Note : Same implementation as BlendSubtractf */ }",
+			"vec3 blendLinearBurn(vec3 base, vec3 blend) { return max(base+blend-vec3(1.0),vec3(0.0)); /* Note : Same implementation as BlendSubtract */ }",
+			"vec3 blendLinearBurn(vec3 base, vec3 blend, float opacity) { return (blendLinearBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendLinearLight(float base, float blend) { return blend<0.5?blendLinearBurn(base,(2.0*blend)):blendLinearDodge(base,(2.0*(blend-0.5))); }",
+			"vec3 blendLinearLight(vec3 base, vec3 blend) { return vec3(blendLinearLight(base.r,blend.r),blendLinearLight(base.g,blend.g),blendLinearLight(base.b,blend.b)); }",
+			"vec3 blendLinearLight(vec3 base, vec3 blend, float opacity) { return (blendLinearLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Linear light blend mode."
+	},
+
+	"Blend Mode: Multiply": {
+		"prefix": ["Multiply Blend Mode"],
+		"body": [
+			"vec3 blendMultiply(vec3 base, vec3 blend) { return base*blend; }",
+			"vec3 blendMultiply(vec3 base, vec3 blend, float opacity) { return (blendMultiply(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Multiply blend mode."
+	},
+
+	"Blend Mode: Negation": {
+		"prefix": ["Negation Blend Mode"],
+		"body": [
+			"vec3 blendNegation(vec3 base, vec3 blend) { return vec3(1.0)-abs(vec3(1.0)-base-blend); }",
+			"vec3 blendNegation(vec3 base, vec3 blend, float opacity) { return (blendNegation(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Negation blend mode."
+	},
+
+	"Blend Mode: Normal": {
+		"prefix": ["Normal Blend Mode"],
+		"body": [
+			"vec3 blendNormal(vec3 base, vec3 blend) { return blend; }",
+			"vec3 blendNormal(vec3 base, vec3 blend, float opacity) { return (blendNormal(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Normal blend mode."
+	},
+
+	"Blend Mode: Overlay": {
+		"prefix": ["Overlay Blend Mode"],
+		"body": [
+			"float blendOverlay(float base, float blend) { return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend)); }",
+			"vec3 blendOverlay(vec3 base, vec3 blend) { return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b)); }",
+			"vec3 blendOverlay(vec3 base, vec3 blend, float opacity) { return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Overlay blend mode."
+	},
+
+	"Blend Mode: Phoenix": {
+		"prefix": ["Phoenix Blend Mode"],
+		"body": [
+			"vec3 blendPhoenix(vec3 base, vec3 blend) { return min(base,blend)-max(base,blend)+vec3(1.0); }",
+			"vec3 blendPhoenix(vec3 base, vec3 blend, float opacity) { return (blendPhoenix(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Phoenix blend mode."
+	},
+
+	"Blend Mode: Pin Light": {
+		"prefix": ["Pin Light Blend Mode"],
+		"body": [
+			"float blendLighten(float base, float blend) { return max(blend,base); }",
+			"vec3 blendLighten(vec3 base, vec3 blend) { return vec3(blendLighten(base.r,blend.r),blendLighten(base.g,blend.g),blendLighten(base.b,blend.b)); }",
+			"vec3 blendLighten(vec3 base, vec3 blend, float opacity) { return (blendLighten(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendDarken(float base, float blend) { return min(blend,base); }",
+			"vec3 blendDarken(vec3 base, vec3 blend) { return vec3(blendDarken(base.r,blend.r),blendDarken(base.g,blend.g),blendDarken(base.b,blend.b)); }",
+			"vec3 blendDarken(vec3 base, vec3 blend, float opacity) { return (blendDarken(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendPinLight(float base, float blend) { return (blend<0.5)?blendDarken(base,(2.0*blend)):blendLighten(base,(2.0*(blend-0.5))); }",
+			"vec3 blendPinLight(vec3 base, vec3 blend) { return vec3(blendPinLight(base.r,blend.r),blendPinLight(base.g,blend.g),blendPinLight(base.b,blend.b)); }",
+			"vec3 blendPinLight(vec3 base, vec3 blend, float opacity) { return (blendPinLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Pin light blend mode."
+	},
+
+	"Blend Mode: Reflect": {
+		"prefix": ["Reflect Blend Mode"],
+		"body": [
+			"float blendReflect(float base, float blend) { return (blend==1.0)?blend:min(base*base/(1.0-blend),1.0); } ",
+			"vec3 blendReflect(vec3 base, vec3 blend) { return vec3(blendReflect(base.r,blend.r),blendReflect(base.g,blend.g),blendReflect(base.b,blend.b)); } ",
+			"vec3 blendReflect(vec3 base, vec3 blend, float opacity) { return (blendReflect(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Reflect blend mode."
+	},
+
+	"Blend Mode: Screen": {
+		"prefix": ["Screen Blend Mode"],
+		"body": [
+			"float blendScreen(float base, float blend) { return 1.0-((1.0-base)*(1.0-blend)); }",
+			"vec3 blendScreen(vec3 base, vec3 blend) { return vec3(blendScreen(base.r,blend.r),blendScreen(base.g,blend.g),blendScreen(base.b,blend.b)); }",
+			"vec3 blendScreen(vec3 base, vec3 blend, float opacity) { return (blendScreen(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Screen blend mode."
+	},
+
+	"Blend Mode: Soft Light": {
+		"prefix": ["Soft Light Blend Mode"],
+		"body": [
+			"float blendSoftLight(float base, float blend) { return (blend<0.5)?(2.0*base*blend+base*base*(1.0-2.0*blend)):(sqrt(base)*(2.0*blend-1.0)+2.0*base*(1.0-blend)); }",
+			"vec3 blendSoftLight(vec3 base, vec3 blend) { return vec3(blendSoftLight(base.r,blend.r),blendSoftLight(base.g,blend.g),blendSoftLight(base.b,blend.b)); } ",
+			"vec3 blendSoftLight(vec3 base, vec3 blend, float opacity) { return (blendSoftLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Soft light blend mode."
+	},
+
+	"Blend Mode: Subtract": {
+		"prefix": ["Subtract Blend Mode"],
+		"body": [
+			"float blendSubstract(float base, float blend) { return max(base+blend-1.0,0.0); }",
+			"vec3 blendSubstract(vec3 base, vec3 blend) { return max(base+blend-vec3(1.0),vec3(0.0)); }",
+			"vec3 blendSubstract(vec3 base, vec3 blend, float opacity) { return (blendSubstract(base, blend) * opacity + blend * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Subtract blend mode."
+	},
+
+	"Blend Mode: Vivid Light": {
+		"prefix": ["Vivid Light Blend Mode"],
+		"body": [
+			"float blendColorBurn(float base, float blend) { return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend) { return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b)); }",
+			"vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) { return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"float blendColorDodge(float base, float blend) { return (blend==1.0)?blend:min(base/(1.0-blend),1.0); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend) { return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b)); }",
+			"vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) { return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity)); }",			
+			"float blendVividLight(float base, float blend) { return (blend<0.5)?blendColorBurn(base,(2.0*blend)):blendColorDodge(base,(2.0*(blend-0.5))); }",
+			"vec3 blendVividLight(vec3 base, vec3 blend) { return vec3(blendVividLight(base.r,blend.r),blendVividLight(base.g,blend.g),blendVividLight(base.b,blend.b)); }",
+			"vec3 blendVividLight(vec3 base, vec3 blend, float opacity) { return (blendVividLight(base, blend) * opacity + base * (1.0 - opacity)); }",
+			"",
+			"",
+		],
+		"description": "Vivid light blend mode."
+	},
+
+	////////////////////
+	// Blur / Sharpen //
+	////////////////////
+
+	"Blur: 2 Pass Smoothstep": {
+		"prefix": ["2 Pass Smoothstep Blur"],
+		"body": [
+			"#define BLUR_QUALITY 6.0",
+			"",
+			"vec4 smoothstepBlur(sampler2D tex, vec2 blur){",
+				"\tvec2 pixel = 1./uRes.xy; vec4 sum = texture2D(tex, vUV); float div = 1.0;",
+				"\tfor (float i = 1.0; i < BLUR_QUALITY; i+=1.0){",
+					"\t\tfloat amp = smoothstep(0.0, BLUR_QUALITY, float(BLUR_QUALITY - i));",
+					"\t\tdiv += 2.0*(1.0 - amp);",
+					"\t\tsum += amp * texture2D(tex, vUV + pixel * blur * i);",
+					"\t\tsum += amp * texture2D(tex, vUV + pixel * blur * -1.0 * i);",
+				"\t}",
+				"\treturn sum / div;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Entry function called upon shader initialization."
+	},	
+
+	////////////////////////
+	// Coloring / Grading //
+	////////////////////////
+
+	"Color: ACES Film Grading": {
+		"prefix": ["Film Grading - ACES"],
+		"body": [
+			"vec3 ACESFilm(vec3 x) {",
+				"\tfloat a = 2.51;",
+				"\tfloat b = 0.03;",
+				"\tfloat c = 2.43;",
+				"\tfloat d = 0.59;",
+				"\tfloat e = 0.14;",
+				"\treturn clamp((x*(a*x+b))/(x*(c*x+d)+e), 0.0, 1.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Academy Color Encoding System."
+	},
+
+	"Color: Reinhard Film Grading": {
+		"prefix": ["Film Grading - Reinhard"],
+		"body": [
+			"const float W = 1.2; const float T2 = 7.5; // linear white point",
+			"",
+			"float filmic_reinhard_curve (float x) {",
+				"\tfloat q = (T2*T2 + 1.0)*x*x;    ",
+				"\treturn q / (q + x + T2*T2);",
+			"}",
+			"",
+			"vec3 filmic_reinhard(vec3 x) {",
+				"\tfloat w = filmic_reinhard_curve(W);",
+				"\treturn vec3(filmic_reinhard_curve(x.r), filmic_reinhard_curve(x.g), filmic_reinhard_curve(x.b)) / w;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Academy Color Encoding System."
+	},
+
+	"Color: Blackbody": {
+		"prefix": ["Blackbody Temperature to Color"],
+		"body": [
+			"vec3 blackbody (float Temp) {",
+				"\tvec3 col = vec3(255.);",
+				"\tcol.x = 56100000. * pow(Temp,(-3. / 2.)) + 148.;",
+				"\tcol.y = 100.04 * log(Temp) - 623.6;",
+				"\tif (Temp > 6500.) col.y = 35200000. * pow(Temp,(-3. / 2.)) + 184.;",
+				"\tcol.z = 194.18 * log(Temp) - 1448.6;",
+				"\tcol = clamp(col, 0., 255.)/255.;",
+				"\tif (Temp < 1000.) col *= Temp/1000.;",
+				"\treturn col;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts a temperature to a color. http://www.physics.sfasu.edu/astro/color/blackbody.html"
+	},
+
+	"Color: Expand Colors": {
+		"prefix": ["Expand Colors", "_expandColors"],
+		"body": [
+			"vec4 expandColors (vec4 col16){ return clamp((col16 - 0.0627450980392157) * 1.143497757847534, 0.0, 1.0); }",
+			"",
+			"",
+		],
+		"description": "Expands color range from limited [16-235] to full [0-255]."
+	},
+
+	"Color: HSV to RGB": {
+		"prefix": ["HSV to RGB Color Space", "_hsv2rgb"],
+		"body": [
+			"vec3 hsv2rgb(vec3 c) {",
+				"\tvec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);",
+				"\tvec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);",
+				"\treturn c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from HSV to RGB color space."
+	},
+
+	"Color: HSV to RGB Smooth": {
+		"prefix": ["HSV to RGB Color Space Smoothed", "_hsv2rgb_smooth"],
+		"body": [
+			"vec3 hsv2rgb_smooth (in vec3 c) {",
+				"\tvec3 rgb = clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );",
+				"\treturn c.z * mix(vec3(1.0), rgb, c.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from HSV to RGB color space with smoother color distrubution. https://www.shadertoy.com/view/MsS3Wc"
+	},
+
+	"Color: RGB to HSV": {
+		"prefix": ["RGB to HSV Color Space"],
+		"body": [
+			"vec3 rgb2hsv (vec3 c) {",
+				"\tvec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);",
+				"\tvec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));",
+				"\tvec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));",
+				"\t",
+				"\tfloat d = q.x - min(q.w, q.y);",
+				"\tfloat e = 1.0e-10;",
+				"\treturn vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from HSV to RGB color space."
+	},
+
+	"Color: Linear sRGB to sRGB": {
+		"prefix": ["Linear sRGB to sRGB Color Space"],
+		"body": [
+			"vec3 linearsRGB_2_sRGB (vec3 x) {",
+				"\tvec3 xlo = 12.92*x;",
+				"\tvec3 xhi = 1.055 * pow(x, vec3(0.4166666666666667)) - 0.055;",
+				"\treturn mix(xlo, xhi, step(vec3(0.0031308), x));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from linear sRGB to sRGB color space."
+	},
+
+	"Color: sRGB to Linear sRGB": {
+		"prefix": ["sRGB to Linear sRGB Color Space"],
+		"body": [
+			"vec3 sRGB_2_linearsRGB (vec3 x) {",
+				"\tvec3 xlo = x / 12.92;",
+				"\tvec3 xhi = pow((x + 0.055)/(1.055), vec3(2.4));",
+				"\treturn mix(xlo, xhi, step(vec3(0.04045), x));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from sRGB to linear sRGB color space."
+	},
+
+	"Color: Linear sRGB to Oklab": {
+		"prefix": ["Linear sRGB to Oklab Color Space"],
+		"body": [
+			"const mat3 invB = mat3(0.4121656120, 0.2118591070, 0.0883097947,",
+            "                       0.5362752080, 0.6807189584, 0.2818474174,",
+            "                       0.0514575653, 0.1074065790, 0.6302613616);",
+            "",
+			"const mat3 invA = mat3(0.2104542553, 1.9779984951, 0.0259040371,",
+			"                       0.7936177850, -2.4285922050, 0.7827717662,",
+			"                      -0.0040720468, 0.4505937099, -0.8086757660);",
+			"",
+			"vec3 linearsRGB_2_oklab (vec3 c) {",
+				"\tvec3 lms = invB * c;",
+				"\treturn invA * (sign(lms)*pow(abs(lms), vec3(0.3333333333333)));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from linear sRGB to Oklab color space."
+	},
+
+	"Color: Oklab to Linear sRGB": {
+		"prefix": ["Oklab to Linear sRGB Color Space"],
+		"body": [
+			"const mat3 fwdA = mat3(1.0,           1.0,           1.0,",
+            "                       0.3963377774, -0.1055613458, -0.0894841775,",
+            "                       0.2158037573, -0.0638541728, -1.2914855480);",
+            "",
+			"const mat3 fwdB = mat3(4.0767245293, -1.2681437731, -0.0041119885,",
+            "                      -3.3072168827,  2.6093323231, -0.7034763098,",
+            "                       0.2307590544, -0.3411344290,  1.7068625689);",
+			"",
+			"vec3 linear_srgb_from_oklab (vec3 c) {",
+				"\tvec3 lms = fwdA * c;",
+				"\treturn fwdB * (lms * lms * lms);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Converts from Oklab color space to linear sRGB."
+	},
+
+	/////////////////
+	// Compositing //
+	/////////////////
+
+	"Composite: Straight": {
+		"prefix": ["Composite Straight Alpha"],
+		"body": [
+			"vec4 composite (vec4 s, vec4 d) { float oa = s.a + d.a*(1.0-s.a); return vec4(vec3((s.rgb*s.a + d.rgb*d.a*(1.0-s.a))/oa),oa); }",
+			"",
+			"",
+		],
+		"description": "With straight alpha, the RGB components represent the color of the object or pixel, disregarding its opacity."
+	},	
+
+	"Composite: Premultiply": {
+		"prefix": ["Composite Premultiplied Alpha"],
+		"body": [
+			"vec4 composite (vec4 s, vec4 d) { return vec4(vec3(s.rgb + d.rgb * (1.0 - s.a)), s.a + d.a * (1.0 - s.a) ); }",
+			"",
+			"",
+		],
+		"description": "With premultiplied alpha, the RGB components represent the emission of the object or pixel, and the alpha represents the occlusion."
+	},
+
+	////////////
+	// Curves //
+	////////////
+
+	"Curve: Gaussian": {
+		"prefix": ["Gaussian Curve 2D"],
+		"body": [
+			"float gauss (float x, float e, float p) { return exp(-pow(x - p, 2.)/e); }",
+			"",
+			"",
+		],
+		"description": "With straight alpha, the RGB components represent the color of the object or pixel, disregarding its opacity."
+	},	
+
+	//////////////////
+	// Environments //
+	//////////////////
+
+	"Environment: Sky": {
+		"prefix": ["Sky Environment"],
+		"body": [
+			"// By Dave Hoskins https://www.shadertoy.com/view/Xsf3zX",
+			"vec3 sky (in vec3 rd, in vec3 sunDir, in vec3 sunCol) {",
+				"\tfloat sunAmount = max( dot( rd, sunDir), 0.0 );",
+				"\tfloat v = pow(1.0-max(rd.y,0.0),6.);",
+				"\tvec3  sky = mix(vec3(.1, .2, .3), vec3(.32, .32, .32), v);",
+				"\tsky = sky + sunCol * sunAmount * sunAmount * .25;",
+				"\tsky = sky + sunCol * min(pow(sunAmount, 800.0)*1.5, .3);",
+				"\treturn clamp(sky, 0.0, 1.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Generates basic sky toning for a given ray direction."
+	},	
+
+	///////////////
+	// Filtering //
+	///////////////
+
+	"Filter: Edge Detection w/ Width": {
+		"prefix": ["Edge Detection Filter"],
+		"body": [
+			"float edgeDetect (sampler2D tex, float lineWidth) { return length(fwidth(texture2D(tex, vUV + 0.5/uRes))) * vec4(lineWidth); }",
+			"",
+			"",
+		],
+		"description": "Draws edges along sharp transitions."
+	},		
+
+	//////////
+	// HASH //
+	//////////
+
+	"Hash: 1 to 1": {
+		"prefix": ["Hash 1 to 1"],
+		"body": [
+			"float hash (float p) {",
+				"\tp = fract(p * .1031);",
+				"\tp *= p + 33.33;",
+				"\tp *= p + p;",
+				"\treturn fract(p);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 1 to 2": {
+		"prefix": ["Hash 1 to 2"],
+		"body": [
+			"vec2 hash (float p) {",
+				"\tvec3 p3 = fract(vec3(p) * vec3(.1031, .1030, .0973));",
+				"\tp3 += dot(p3, p3.yzx + 33.33);",
+				"\treturn fract((p3.xx+p3.yz)*p3.zy);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 1 to 3": {
+		"prefix": ["Hash 1 to 3"],
+		"body": [
+			"vec3 hash (float p) {",
+				"\tvec3 p3 = fract(vec3(p) * vec3(.1031, .1030, .0973));",
+				"\tp3 += dot(p3, p3.yzx+33.33);",
+				"\treturn fract((p3.xxy+p3.yzz)*p3.zyx); ",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 1 to 4": {
+		"prefix": ["Hash 1 to 4"],
+		"body": [
+			"vec4 hash (float p) {",
+				"\tvec4 p4 = fract(vec4(p) * vec4(.1031, .1030, .0973, .1099));",
+				"\tp4 += dot(p4, p4.wzxy+33.33);",
+				"\treturn fract((p4.xxyz+p4.yzzw)*p4.zywx);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 2 to 1": {
+		"prefix": ["Hash 2 to 1"],
+		"body": [
+			"float hash (vec2 p) {",
+				"\tvec3 p3  = fract(vec3(p.xyx) * .1031);",
+				"\tp3 += dot(p3, p3.yzx + 33.33);",
+				"\treturn fract((p3.x + p3.y) * p3.z);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 2 to 2": {
+		"prefix": ["Hash 2 to 2"],
+		"body": [
+			"vec2 hash (vec2 p) {",
+				"\tvec3 p3 = fract(vec3(p.xyx) * vec3(.1031, .1030, .0973));",
+				"\tp3 += dot(p3, p3.yzx+33.33);",
+				"\treturn fract((p3.xx+p3.yz)*p3.zy);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 2 to 3": {
+		"prefix": ["Hash 2 to 3"],
+		"body": [
+			"vec3 hash (vec2 p) {",
+				"\tvec3 p3 = fract(vec3(p.xyx) * vec3(.1031, .1030, .0973));",
+				"\tp3 += dot(p3, p3.yxz+33.33);",
+				"\treturn fract((p3.xxy+p3.yzz)*p3.zyx);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 2 to 4": {
+		"prefix": ["Hash 2 to 4"],
+		"body": [
+			"vec4 hash (vec2 p) {",
+				"\tvec4 p4 = fract(vec4(p.xyxy) * vec4(.1031, .1030, .0973, .1099));",
+				"\tp4 += dot(p4, p4.wzxy+33.33);",
+				"\treturn fract((p4.xxyz+p4.yzzw)*p4.zywx);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 3 to 1": {
+		"prefix": ["Hash 3 to 1"],
+		"body": [
+			"float hash (vec3 p3) {",
+				"\tp3  = fract(p3 * .1031);",
+				"\tp3 += dot(p3, p3.zyx + 31.32);",
+				"\treturn fract((p3.x + p3.y) * p3.z);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 3 to 2": {
+		"prefix": ["Hash 3 to 2"],
+		"body": [
+			"vec2 hash (vec3 p3) {",
+				"\tp3 = fract(p3 * vec3(.1031, .1030, .0973));",
+				"\tp3 += dot(p3, p3.yzx+33.33);",
+				"\treturn fract((p3.xx+p3.yz)*p3.zy);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 3 to 3": {
+		"prefix": ["Hash 3 to 3"],
+		"body": [
+			"vec3 hash (vec3 p3) {",
+				"\tp3 = fract(p3 * vec3(.1031, .1030, .0973));",
+				"\tp3 += dot(p3, p3.yxz+33.33);",
+				"\treturn fract((p3.xxy + p3.yxx)*p3.zyx);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 3 to 4": {
+		"prefix": ["Hash 3 to 4"],
+		"body": [
+			"vec4 hash (vec3 p) {",
+				"\tvec4 p4 = fract(vec4(p.xyzx)  * vec4(.1031, .1030, .0973, .1099));",
+				"\tp4 += dot(p4, p4.wzxy+33.33);",
+				"\treturn fract((p4.xxyz+p4.yzzw)*p4.zywx);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	"Hash: 4 to 4": {
+		"prefix": ["Hash 4 to 4"],
+		"body": [
+			"vec4 hash (vec4 p4) {",
+				"\tp4 = fract(p4  * vec4(.1031, .1030, .0973, .1099));",
+				"\tp4 += dot(p4, p4.wzxy+33.33);",
+				"\treturn fract((p4.xxyz+p4.yzzw)*p4.zywx);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hash without sine by Dave Hoskins: https://www.shadertoy.com/view/4djSRW"
+	},
+
+	//
+
+	"Hash: Dirty Trig 2D": {
+		"prefix": ["Trigonmetric Hash 2D", "Trigonmetric Random 2D"],
+		"body": [
+			"// byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/",
+			"// (Probably Don't Use)",
+			"float rand (vec2 co) { return fract(sin(dot(co.xy,vec2(12.9898,78.233))) * 43758.5453); }",
+			"",
+			"",
+		],
+		"description": "Basic random - probably don't use."
+	},
+
+	"Hash: Dirty Trig 1D - 3 Component": {
+		"prefix": ["Trigonmetric Hash 1D (vec3)", "Trigonmetric Random 1D (vec3)"],
+		"body": [
+			"vec3 hash3 (float n) { return fract(sin(vec3(n,n+1.0,n+2.0))*43758.5453123); }",
+			"",
+			"",
+		],
+		"description": "Basic trig hash."
+	},
+
+	"Hash: Golden 2D (dcerisano)": {
+		"prefix": ["Golden Hash 2D"],
+		"body": [
+			"// Gold Noise ©2015 dcerisano@standard3d.com",
+			"const float PHI = 1.61803398874989484820459; // Φ = Golden Ratio ",
+			"float goldNoise (in vec2 xy, in float seed) { return fract(tan(distance(xy*PHI, xy)*seed)*xy.x); }",
+			"",
+			"",
+		],
+		"description": "Noise based on the Golden Ratio. Uniform normalized distribution. Fastest static noise generator function (also runs at low precision)."
+	},
+
+	"Hash: Integer Hash 1D (Hugo Elias)": {
+		"prefix": ["Integer Hash 1D", "Integer Random 3D"],
+		"body": [
+			"// integer hash by Hugo Elias",
+			"float hash1 (uint n) {",
+				"n = (n << 13U) ^ n;",
+				"n = n * (n * n * 15731U + 789221U) + 1376312589U;",
+				"return float( n & uvec3(0x7fffffffU))/float(0x7fffffff);",
+			"}",
+			"vec3 hash3 (uint n) {",
+				"n = (n << 13U) ^ n;",
+				"n = n * (n * n * 15731U + 789221U) + 1376312589U;",
+				"uvec3 k = n * uvec3(n,n*16807U,n*48271U);",
+				"return vec3( k & uvec3(0x7fffffffU))/float(0x7fffffff);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Integer hash noise functions by Hugo Elias via IQ."
+	},
+
+	"Hash: Integer Hash Implementation 1D  (Hugo Elias)": {
+		"prefix": ["Integer Hash 1D Implementation", "Integer Random 1D Implementation"],
+		"body": [
+			"uvec2 p = uvec2(vUV * uRes);",
+			"vec3 c = vec3( hash1( p.x + 1920U*p.y + (1920U*1080U)*uint(iFrame) ) );",
+			"",
+		],
+		"description": "Example of a Hugo Elias integer hash noise call."
+	},
+
+	"Hash: Integer 3D (IQ)": {
+		"prefix": ["Integer Hash 3D IQ", "Integer Random 3D IQ"],
+		"body": [
+			"// integer hash by IQ",
+			"const uint k = 1103515245U;  // GLIB C",
+			"//const uint k = 134775813U;   // Delphi and Turbo Pascal",
+			"//const uint k = 20170906U;    // Today's date (use three days ago's dateif you want a prime)",
+			"//const uint k = 1664525U;     // Numerical Recipes",
+			"",
+			"vec3 hash (uvec3 x){",
+				"\tx = ((x>>8U)^x.yzx)*k;",
+				"\tx = ((x>>8U)^x.yzx)*k;",
+				"\tx = ((x>>8U)^x.yzx)*k;",
+				"\treturn vec3(x)*(1.0/float(0xffffffffU));",
+			"}",
+			"",
+			"",
+		],
+		"description": "3D Integer hash noise function by IQ."
+	},
+
+	"Hash: Integer 1D (IQ)": {
+		"prefix": ["Integer Hash 1D (IQ)", "Integer Random 1D (IQ)"],
+		"body": [
+			"// integer hash by IQ",
+			"float hash (uint x) {",
+				"\tx = ((x>>8U)^x)*k;",
+				"\treturn float(x)*(1.0/float(0xffffffffU));",
+			"}",
+			"",
+			"",
+		],
+		"description": "1D Integer hash noise function by IQ."
+	},
+
+	"Hash: Integer 1D Low Bias 32": {
+		"prefix": ["Integer Hash 1D Low Bias 32", "Integer Random 1D Low Bias 32"],
+		"body": [
+			"// bias: 0.17353355999581582 ( very probably the best of its kind )",
+			"#define hash(x)  ( float( lowbias32(x) ) / float( 0xffffffffU ) )",
+			"uint lowbias32 (uint x) {",
+				"\tx ^= x >> 16;",
+				"\tx *= 0x7feb352dU;",
+				"\tx ^= x >> 15;",
+				"\tx *= 0x846ca68bU;",
+				"\tx ^= x >> 16;",
+				"\treturn x;",
+			"}",
+			"",
+			"uvec2 V = uvec2(vUV * uRes);",
+			"float h = hash(V.x + lowbias32(V.y));",
+			"",
+			"",
+		],
+		"description": "High quality integer hash discovered by Chris Wellons https://nullprogram.com/blog/2018/07/31/."
+	},
+
+	"Hash: Integer Triple 32": {
+		"prefix": ["Integer Hash 1D Triple 32", "Integer Random 1D Low Bias 32"],
+		"body": [
+			"// bias: 0.020888578919738908 = minimal theoretic limit",
+			"#define hash(x)  ( float( triple32(x) ) / float( 0xffffffffU ) )",
+			"uint triple32 (uint x) {",
+				"\tx ^= x >> 17;",
+				"\tx *= 0xed5ad4bbU;",
+				"\tx ^= x >> 11;",
+				"\tx *= 0xac4c1b51U;",
+				"\tx ^= x >> 15;",
+				"\tx *= 0x31848babU;",
+				"\tx ^= x >> 14;",
+				"\treturn x;",
+			"}",
+			"",
+			"uvec2 V = uvec2(vUV * uRes);",
+			"float h = hash(V.x + triple32(V.y));",
+			"",
+			"",
+		],
+		"description": "Statistically indistinguishable from a random permutation of all 32-bit integers. Discovered by Chris Wellons https://nullprogram.com/blog/2018/07/31/."
+	},
+
+	"Hash: Tileable": {
+		"prefix": ["Integer Hash 1D Triple 32", "Integer Random 1D Low Bias 32"],
+		"body": [
+			"float hash (in vec2 p, in float scale) {",
+				"\tp = mod(p, scale);",
+				"\treturn fract(sin(dot(p, vec2(27.16898, 38.90563))) * 5151.5473453);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Noise that tiles by a scale parameter. By Dave Hoskins: https://www.shadertoy.com/view/4dlGW2"
+	},
+
+	///////////////////
+	// Interpolation //
+	///////////////////
+
+	"Interpolation: Double Smoothstep": {
+		"prefix": ["Double Smoothstep Interpolation", "Double Smoothstep Mix"],
+		"body": [
+			"//a = v(x=0), b = v(x=m), c = v(x=1), m = midpoint, x",
+			"float smoothstep3 (float a, float b, float c, float m, float x) { return a+(b-a)*smoothstep(0.0, m, x)+(c-b)*smoothstep(m, 1.0, x); }",
+			"",
+			"",
+		],
+		"description": "Double smoothstep with midpoint."
+	},	
+
+	"Interpolation: Catmull Rom": {
+		"prefix": ["Catmull Rom Interpolation", "Catmull Rom Mix"],
+		"body": [
+			"float Catmull_Rom(float x, float v0, float v1, float v2, float v3) {",
+				"\tfloat c2 = -.5 * v0 + 0.5*v2;",
+				"\tfloat c3 = v0 + -2.5*v1 + 2.0*v2 + -.5*v3;",
+				"\tfloat c4 = -.5 * v0 + 1.5*v1 + -1.5*v2 + 0.5*v3;",
+				"\treturn(((c4 * x + c3) * x + c2) * x + v1);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Centripetal Catmull–Rom spline interpolatation between 4 values."
+	},
+
+	"Interpolation: Oklab Mix": {
+		"prefix": ["Oklab Interpolation", "Oklab Mix"],
+		"body": [
+			"vec3 oklab_mix(vec3 colA, vec3 colB, float h) {",
+				"\t// https://bottosson.github.io/posts/oklab",
+				"\tconst mat3 kCONEtoLMS = mat3(                ",
+				"\t  0.4121656120,  0.2118591070,  0.0883097947,",
+				"\t  0.5362752080,  0.6807189584,  0.2818474174,",
+				"\t  0.0514575653,  0.1074065790,  0.6302613616);",
+				"\tconst mat3 kLMStoCONE = mat3(",
+				"\t  4.0767245293, -1.2681437731, -0.0041119885,",
+				"\t  -3.3072168827,  2.6093323231, -0.7034763098,",
+				"\t  0.2307590544, -0.3411344290,  1.7068625689);",
+				"\t",
+				"\t// rgb to cone (arg of pow can't be negative)",
+				"\tvec3 lmsA = pow( kCONEtoLMS*colA, vec3(1.0/3.0) );",
+				"\tvec3 lmsB = pow( kCONEtoLMS*colB, vec3(1.0/3.0) );",
+				"\t// lerp",
+				"\tvec3 lms = mix( lmsA, lmsB, h );",
+				"\t// gain in the middle (no oaklab anymore, but looks better?)",
+				"\t// lms *= 1.0+0.2*h*(1.0-h);",
+				"\t// cone to rgb",
+				"\treturn kLMStoCONE*(lms*lms*lms);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Cosine interpolatation between two values."
+	},	
+
+	"Interpolation: Trigonometric": {
+		"prefix": ["Trigonometric Interpolation", "Trigonometric Mix"],
+		"body": [
+			"float mixTrig (float x, float v0, float v1) { x = (1.0-cos(x*3.1415927)) * .5; return (v1-v0)*x + v0; }",
+			"",
+			"",
+		],
+		"description": "Cosine interpolatation between two values."
+	},	
+
+	"Interpolation: Cubic": {
+		"prefix": ["Cubic Interpolation", "Cubic Mix"],
+		"body": [
+			"float Cubic(float x, float v0,float v1, float v2,float v3) {",
+				"\tfloat p = (v3 - v2) - (v0 - v1);",
+				"\treturn p*(x*x*x) + ((v0 - v1) - p)*(x*x) + (v2 - v0)*x + v1;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Cosine interpolatation between two values."
+	},
+
+	"Interpolation: Spline": {
+		"prefix": ["Spline Interpolation", "Spline Mix"],
+		"body": [
+			"float ThirdOrderSpline(float x, float L1, float L0, float H0, float H1) {",
+			"\treturn L0 +.5 *",
+			"\tx * ( H0-L1 +",
+			"\tx * ( H0 + L0 * -2.0 +  L1 +",
+			"\tx * ((H0 - L0) * 9.0 + (L1 - H1) * 3.0 +",
+			"\tx * ((L0 - H0) * 15.0 + (H1 - L1) * 5.0 +",
+			"\tx * ((H0 - L0) * 6.0 + (L1 - H1) * 2.0 )))));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Third order spline interpolatation between 4 values."
+	},	
+
+	////////////
+	// Lights //
+	////////////
+
+	"Lighting: Ambient Occlusion": {
+		"prefix": ["Ambient Occlusion Calculation"],
+		"body": [
+			"float calcAO (in vec3 pos, in vec3 nor) {",
+				"\tfloat occ = 0.0;",
+				"\tfloat sca = 1.0;",
+				"\tfor (int i=0; i<5; i++) {",
+					"\t\tfloat h = 0.01 + 0.12*float(i)/4.0;",
+					"\t\tfloat d = map(pos + h*nor).x;",
+					"\t\tocc += (h-d)*sca;",
+					"\t\tsca *= 0.95;",
+					"\t\tif( occ>0.35 ) break;",
+				"\t}",
+				"\treturn clamp( 1.0 - 3.0*occ, 0.0, 1.0 ) * (0.5+0.5*nor.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Ambient Occlusion by IQ."
+	},
+
+	"Lighting: Soft Shadow": {
+		"prefix": ["Soft Shadow Calculation"],
+		"body": [
+			"float calcSoftShadow (in vec3 ro, in vec3 rd, in float mint, in float tmax) {",
+				"\t// bounding volume",
+				"\tfloat tp = (0.8-ro.y)/rd.y;",
+				"\tif( tp>0.0 ) tmax = min( tmax, tp );",
+				"\t",
+				"\tfloat res = 1.0;",
+				"\tfloat t = mint;",
+				"\tfor (int i=0; i<24; i++) {",
+					"\t\tfloat h = map( ro + rd*t ).x;",
+					"\t\tfloat s = clamp(8.0*h/t,0.0,1.0);",
+					"\t\tres = min( res, s*s*(3.0-2.0*s) );",
+					"\t\tt += clamp( h, 0.02, 0.2 );",
+					"\t\tif( res<0.004 || t>tmax ) break;",
+				"\t}",
+				"\treturn clamp( res, 0.0, 1.0 );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Soft Shadow by IQ. http://iquilezles.org/www/articles/rmshadows/rmshadows.htm"
+	},
+
+	"Light: Phong": {
+		"prefix": ["Phong Light"],
+		"body": [
+			"// amb: Ambient, diff: Diffuse, spec: Specular, alpha: Shininess coefficient, p: position of point being lit, eye: the position of the camera,lightPos: the position of the light, lightIntensity: color/intensity of the light",
+			"",
+			"vec3 phongLight (vec3 diff, vec3 spec, float alpha, vec3 p, vec3 ro, vec3 lightPos, vec3 intensity) {",
+				"\tvec3 N = estNorm(p);",
+				"\tvec3 L = normalize(lightPos - p);",
+				"\tvec3 V = normalize(ro - p);",
+				"\tvec3 R = normalize(reflect(-L, N));",
+				"\t",
+				"\tfloat dotLN = dot(L, N);",
+				"\tfloat dotRV = dot(R, V);",
+				"\t",
+				"\tif (dotLN < 0.0) return vec3(0.0, 0.0, 0.0); // Light not visible from this point on the surface",
+				"\tif (dotRV < 0.0) return intensity * (diff * dotLN); // Light reflection in opposite direction as viewer, apply only diffuse",
+
+				"\treturn intensity * (diff * dotLN + spec * pow(dotRV, alpha));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Phong light model (https://en.wikipedia.org/wiki/Phong_reflection_model)."
+	},
+
+	"Light: Phong Rig Example": {
+		"prefix": ["Phong Rig Example"],
+		"body": [
+			"// amb: Ambient color, diff: Diffuse color, spec: Specular color, alpha: Shininess coefficient, p: position of point being lit, eye: the position of the camera",
+			"",
+			"vec3 phongRig (vec3 amb, vec3 diff, vec3 spec, float alpha, vec3 p, vec3 eye) {",
+				"\t",
+				"\tvec3 ambientLight = 0.5 * vec3(1.0, 1.0, 1.0);",
+				"\tvec3 color = ambientLight * amb;",
+				"\t",
+				"\tvec3 light1Pos = vec3(4.0 * sin(uTime), 2.0, 4.0 * cos(uTime));",
+				"\tvec3 light1Intensity = vec3(0.4, 0.4, 0.4);",
+				"\t",
+				"\tcolor += phongLight(diff, spec, alpha, p, eye, light1Pos, light1Intensity);",
+				"\t",
+				"\tvec3 light2Pos = vec3(2.0 * sin(0.37 * uTime), 2.0 * cos(0.37 * uTime), 2.0);",
+				"\tvec3 light2Intensity = vec3(0.4, 0.4, 0.4);",
+				"\t",
+				"\tcolor += phongLight(diff, spec, alpha, p, eye, light2Pos, light2Intensity);   ",
+				"\t",
+				"\treturn color;",
+				"\t",
+			"}",
+			"",
+			"",
+		],
+		"description": "Two phong lights rotating around."
+	},	
+
+	//////////
+	// Math //
+	//////////
+
+	"Math: Complex Divide": {
+		"prefix": ["Complex Divide", "Imaginary Divide", "Math"],
+		"body": [
+			"vec2 cdiv (vec2 a, vec2 b) { float d = dot(b,b); return vec2( dot(a,b), a.y*b.x - a.x*b.y ) / d; }",
+			"",
+			"",
+		],
+		"description": "Divide one complex number by another."
+	},
+
+	"Math: Complex Multiply": {
+		"prefix": ["Complex Multiply", "Imaginary Multiply", "Math"],
+		"body": [
+			"vec2 cmul (vec2 a, vec2 b) { return vec2( a.x*b.x - a.y*b.y, a.x*b.y + a.y*b.x ); }",
+			"",
+			"",
+		],
+		"description": "Multiple two complex numbers."
+	},
+
+	"Math: Complex Power": {
+		"prefix": ["Complex Power", "Imaginary Power", "Math"],
+		"body": [
+			"vec2 cpow (vec2 z, float n) { float r = length( z ); float a = atan( z.y, z.x ); return pow( r, n )*vec2( cos(a*n), sin(a*n) ); }",
+			"",
+			"",
+		],
+		"description": "Raise a complex number to a (real) power."
+	},
+
+	"Math: Complex Square Root": {
+		"prefix": ["Complex Square Root", "Imaginary Square Root", "Math"],
+		"body": [
+			"vec2 csqrt (vec2 z) { float m = length(z); return sqrt( 0.5*vec2(m+z.x, m-z.x) ) * vec2( 1.0, sign(z.y) ); }",
+			"",
+			"",
+		],
+		"description": "Square root of a complex number."
+	},
+
+	"Math: Complex Conjugate": {
+		"prefix": ["Complex Conjugate Root", "Imaginary Conjugate Root", "Math"],
+		"body": [
+			"vec2 cconj (vec2 z) { return vec2(z.x,-z.y); }",
+			"",
+			"",
+		],
+		"description": "The complex conjugate."
+	},
+
+	"Math: Remap": {
+		"prefix": ["Remap", "Math"],
+		"body": [
+			"${1:float} remap (${1:float} x, ${1:float} iMin, ${1:float} iMax, ${1:float} oMin, ${1:float} oMax) { return clamp(oMin + (x - iMin) * (oMax - oMin) / (iMax - iMin), oMin, oMax); }",
+			"",
+			"",
+		],
+		"description": "Remap a {type} value from an input range to an output range."
+	},
+
+	"Math: Remap From [0 - 1]": {
+		"prefix": ["Remap From 0-1", "Math"],
+		"body": [
+			"${1:float} remapFrom01 (${1:float} x, ${1:float} oMin, ${1:float} oMax) { return clamp(oMin + (x - 0) * (oMax - oMin), oMin, oMax); }",
+			"",
+			"",
+		],
+		"description": "Remap a float value from an input range to an output range of [0 - 1]."
+	},
+
+	"Math: Remap To [0 - 1]": {
+		"prefix": ["Remap To 0-1", "Math"],
+		"body": [
+			"${1:float} remapTo01 (${1:float} x, ${1:float} iMin, ${1:float} iMax) { return clamp((x - iMin) * 1 / (iMax - iMin), 0, 1); }",
+			"",
+			"",
+		],
+		"description": "Remap a float value from an input range to an output range of [0 - 1]."
+	},
+
+	///////////
+	// March //
+	///////////
+
+	"March: Calculate Normal": {
+		"prefix": ["Estimate Normal"],
+		"body": [
+			"vec3 estNorm (in vec3 pos) {",
+				"\tvec3 eps = vec3(.001,0.0,0.0);",
+				"\treturn normalize(vec3(",
+					"\t\tmap(pos+eps.xyy).x - map(pos-eps.xyy).x;",
+					"\t\tmap(pos+eps.yxy).x - map(pos-eps.yxy).x;",
+					"\t\tmap(pos+eps.yyx).x - map(pos-eps.yyx).x));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Estimate normal at a point on a signed distance field. Assumes scene function is labelled 'map'."
+	},
+
+	"March: Calculate Normal 2": {
+		"prefix": ["Estimate Normal 2"],
+		"body": [
+			"vec3 estNorm (in vec3 pos) {",
+				"\tvec3 eps = vec3(.001,0.0,0.0);",
+				"\tfloat d = map(pos);",
+				"\treturn normalize(vec3(",
+					"\t\tmap(pos+eps.xyy).x - d;",
+					"\t\tmap(pos+eps.yxy).x - d;",
+					"\t\tmap(pos+eps.yyx).x - d));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Estimate normal at a point on a signed distance field. Assumes scene function is labelled 'map'."
+	},
+
+	"March: Calculate Normal 3": {
+		"prefix": ["Estimate Normal 3"],
+		"body": [
+			"vec3 estNorm (in vec3 pos) {",
+				"\tvec2 e = vec2(-1., 1.)*0.001;",
+				"\treturn normalize(e.yxx*map(p + e.yxx) + e.xxy*map(p + e.xxy) + e.xyx*map(p + e.xyx) + e.yyy*map(p + e.yyy))",
+			"}",
+			"",
+			"",
+		],
+		"description": "'Tetrehedral' normal by IQ. Estimate normal at a point on a signed distance field. Assumes scene function is labelled 'map'."
+	},
+
+	"March: Calculate Normal wo. Unroll": {
+		"prefix": ["Estimate Normal wo. Unroll"],
+		"body": [
+			"// IQ: 'inspired by klems - a way to prevent the compiler from inlining map() 4 times'",
+			"vec3 estNorm (vec3 pos) {",
+				"\tvec3 n = vec3(0.0);",
+				"\tfor (int i=0; i<4; i++) {",
+					"\t\tvec3 e = 0.5773*(2.0*vec3((((i+3)>>1)&1),((i>>1)&1),(i&1))-1.0);",
+					"\t\tn += e * map(pos+0.0005*e).x;",
+				"\t}",
+				"\treturn normalize(n); ",
+			"}",
+			"",
+			"",
+		],
+		"description": "Estimate normal at a point on a signed distance field. IQ: 'inspired by klems - a way to prevent the compiler from inlining map() 4 times'. Assumes scene function is labelled 'map'."
+	},
+
+	"March: Distance": {
+		"prefix": ["Ray March Distance", "Ray March Intersect"],
+		"body": [
+			"const int MAX_MARCHING_STEPS = 64;",
+			"const float EPSILON = 0.0001;",
+			"",
+			"float march (vec3 ro, vec3 rd, float far) {",
+				"\tfloat d = 0.0;",
+				"\tfor (int i = 0; i < MAX_MARCHING_STEPS; i++) {",
+					"\t\tfloat dist = map(ro + d * rd);",
+					"\t\tif (dist < EPSILON) return d;",
+					"\t\t",
+					"\t\td += dist;",
+					"\t\tif (d >= far) return far;",
+				"\t}",
+				"\treturn far;",
+			"}",
+			"",
+			"",
+		],
+		"description": "March along a ray. Returns the shortest distance from a position to the scene of a sfd along a marching direction."
+	},
+
+	/////////////
+	// Cameras //
+	/////////////
+
+	"Camera: Cylinder": {
+		"prefix": ["Cylinder Ray Direction"],
+		"body": [
+			"vec3 cylinderCamera () {",
+				"\tfloat a = 2.0 *  3.1415927 * vUV.x;",
+				"\tvec3 proj = vec3(cos(a), sin(a), vUV.y);",
+				"\treturn normalize(proj.xyz); //Swizzle for various projections",
+			"}",
+			"",
+
+			"",
+			"",
+		],
+		"description": "Cylindrical camera projection."
+	},
+
+	"Camera: Fulldome": {
+		"prefix": ["Fulldome Ray Direction"],
+		"body": [
+			"vec4 fulldome () {",
+				"\t// w coord = whether or not to render texel",
+				"\tvec2 uv = 2.0 * (vUV - 0.5); uv.x *= uRes.x/uRes.y; float r = length(uv);",
+				"\treturn vec4(normalize(vec3(uv.x,uv.y,sqrt(1-clamp(r*r,0.0,1.0)))), r < 1.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Hemispherical camera projection from texture coordinate. (Previously the normalize was missing, this is now fixed.)"
+	},
+
+	"Camera: Perspective": {
+		"prefix": ["Simple Perspective Ray Direction"],
+		"body": [
+			"vec3 rayDir (float fov) {",
+				"\tvec2 xy = uRes * (vUV - 0.5);",
+				"\tfloat z = uRes.y / tan(3.1415927 * fov / 2.0);",
+				"\treturn normalize(vec3(xy, -z));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Perspective ray direction from texture coordinate."
+	},
+
+	/////////////////
+	// View Matrix //
+	/////////////////
+
+	"View Matrix: LookAt": {
+		"prefix": ["LookAt View Matrix"],
+		"body": [
+			"// Assumes that the center of the camera is aligned with the negative z axis in view space when calculating the ray marching direction. See rayDirection.",
+			"mat3 viewMatrix(vec3 ro, vec3 center, vec3 up) {",
+				"\tvec3 f = normalize(center - ro);",
+				"\tvec3 s = normalize(cross(f, up));",
+				"\tvec3 u = cross(s, f);",
+				"\treturn mat3(s, u, -f);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Lookat view matrix."
+	},
+
+	///////////////
+	// Renderers //
+	///////////////
+
+	"Renderer: Example Basic Marching": {
+		"prefix": ["Basic Renderer Example"],
+		"body": [
+			"const float MAX_DIST = 100.0;",
+			"",
+			"vec3 render () {",
+				"\t",
+				"\tvec3 rd = rayDir(0.25);",
+				"\tvec3 ro = vec3(8.0, 5.0 * sin(0.2 * uTime), 7.0);",
+				"\tvec3 worldDir = viewMatrix(ro, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0)) * rd;",
+				"\t",
+				"\tfloat dist = march(ro, worldDir, MAX_DIST);",
+				"\t",
+				"\tif (dist > MAX_DIST - EPSILON) return vec3(0.0);",
+				"\t",
+				"\tvec3 p = ro + dist * worldDir;",
+				"\t",
+				"\tvec3 amb = (estNorm(p) + vec3(1.0)) / 2.0;",
+				"\tvec3 diff = amb;",
+				"\tvec3 spec = vec3(1.0, 1.0, 1.0);",
+				"\tfloat shininess = 10.0;",
+				"\t",
+				"\tvec3 color = phongRig(amb, diff, spec, shininess, p, ro);",
+				"\t",
+				"\treturn color;",
+				"\t",
+			"}",
+			"",
+			"",
+		],
+		"description": "A simple ray marching renderer setup."
+	},	
+
+	///////////
+	// Noise //
+	///////////
+
+	// Compared: https://www.shadertoy.com/view/4llcWn
+
+	//Discussion:
+	//https://stackoverflow.com/questions/4200224/random-noise-functions-for-glsl
+	//https://blog.demofox.org/2017/05/29/when-random-numbers-are-too-random-low-discrepancy-sequences/
+	//https://forum.unity.com/threads/generate-random-float-between-0-and-1-in-shader.610810/
+	//"it's fairly well accepted that the best quality noise you can get is some form of blue noise"
+	//"Unity's own post processing shaders use blue noise textures now almost exclusively."
+	//Blue Noise: momentsingraphics.de/?p=127
+	//CPU + GPU Implementation (Geed enough for monte carlo even):
+	//https://math.stackexchange.com/questions/337782/pseudo-random-number-generation-on-the-gpu
+	//Shadertoy:
+	// https://www.shadertoy.com/view/XlXcW4 (IQ)
+	// https://www.shadertoy.com/view/llGSzw (IQ)
+	//https://www.shadertoy.com/view/ltB3zD (Gold Noise)
+	//https://www.shadertoy.com/view/4llcWn (Response to Gold Noise)
+	//https://www.shadertoy.com/view/4sc3z2 (Amazing noise collection - Mettabook preformance: Perlin ~ Value ~ Simplex)
+
+	"Noise: Fractal Brownian Motion": {
+		"prefix": ["Fractal Brownian Motion Noise", "FBM Noise"],
+		"body": [
+			"float fbm (in vec{N} x, in float H = 1.0) {    ",
+				"\tfloat G = exp2(-H);",
+				"\tfloat f = 1.0;",
+				"\tfloat a = 1.0;",
+				"\tfloat t = 0.0;",
+				"\tfor (int i=0; i<numOctaves; i++) {",
+					"\t\tt += a*noise(f*x);",
+					"\t\tf *= 2.0;",
+					"\t\ta *= G;",
+				"\t}",
+				"\treturn t;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Fractal Brownian Motion"
+	},
+
+	//
+
+	"Noise: Glitch 3D": {
+		"prefix": ["Gradient Noise 1D"],
+		"body": [
+			"const int NOISE_DEPTH = 5;",
+			"vec3 glitchNoise (uvec3 iuv) {",
+				"\tiuv *=uvec3(5332,2524,7552);",
+				"\tfor (int i = 0; i < NOISE_DEPTH; i++) iuv += (iuv.yzx<<2) ^ (iuv.yxz)+iuv.z;",
+				"\treturn vec3(iuv)*(1.0/float(0xffffffffU));",
+			"}",
+			"",
+			"uvec3 p = uvec3(vUV * iResolution.xy, iFrame);",
+			"vec3 v = glitchNoise(p);",
+			"",
+			"",
+		],
+		"description": "3D Glitch noise by DJDoomz: https://www.shadertoy.com/view/ltXyD4"
+	},
+
+	"Noise: Gradient 1D": {
+		"prefix": ["Gradient Noise 1D"],
+		"body": [
+			"// Integer hash by Hugo Elias",
+			"float hash (int n)  {",
+				"\tn = (n << 13) ^ n;",
+				"\tn = n * (n * n * 15731 + 789221) + 1376312589;",
+				"\treturn -1.0+2.0*float( n & ivec3(0x0fffffff))/float(0x0fffffff);",
+			"}",
+			"",
+			"// Fradient noise by IQ",
+			"float gradientNoise (in float p) {",
+				"\tint   i = int(floor(p));",
+				"\tfloat f = fract(p);",
+				"\tfloat u = f*f*(3.0-2.0*f);",
+				"\treturn mix(hash(i+0)*(f-0.0), hash(i+1)*(f-1.0), u);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Gradient noise 1D by IQ"
+	},
+
+	"Noise: Gradient 2D": {
+		"prefix": ["Gradient Noise 2D"],
+		"body": [
+			"vec2 grad (ivec2 z)  { // replace this anything that returns a random vector",
+				"\t// 2D to 1D  (feel free to replace by some other)",
+				"\tint n = z.x+z.y*11111;",
+				"\t",
+				"\t// Hugo Elias hash (feel free to replace by another one)",
+				"\tn = (n<<13)^n;",
+				"\tn = (n*(n*n*15731+789221)+1376312589)>>16;",
+			"#if 0",
+				"\t// simple random vectors",
+				"\treturn vec2(cos(float(n)),sin(float(n)));",
+				"\t",
+			"#else",
+				"\t// Perlin style vectors",
+				"\tn &= 7;",
+				"\tvec2 gr = vec2(n&1,n>>1)*2.0-1.0;",
+				"\treturn ( n>=6 ) ? vec2(0.0,gr.x) : ( n>=4 ) ? vec2(gr.x,0.0) : gr;",
+			"#endif                              ",
+			"}",
+			"",
+			"float noise (in vec2  ) {",
+				"\tivec2 i = ivec2(floor( p ));",
+				"\tvec2 f =       fract( p );",
+				"\t",
+				"\tvec2 u = f*f*(3.0-2.0*f); // feel free to replace by a quintic smoothstep instead",
+				"\t",
+				"\treturn mix( mix( dot( grad( i+ivec2(0,0) ), f-vec2(0.0,0.0) ), ",
+				"\tdot( grad( i+ivec2(1,0) ), f-vec2(1.0,0.0) ), u.x),",
+				"\tmix( dot( grad( i+ivec2(0,1) ), f-vec2(0.0,1.0) ), ",
+				"\tdot( grad( i+ivec2(1,1) ), f-vec2(1.0,1.0) ), u.x), u.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Gradient noise 2D by IQ - https://www.shadertoy.com/view/XdXGW8."
+	},
+
+	"Noise: Gradient 2D + Derivatives": {
+		"prefix": ["Gradient Noise 2D + Derivatives"],
+		"body": [
+			"vec2 hash (in vec2 x)  { // replace this by something better ",
+				"\tconst vec2 k = vec2( 0.3183099, 0.3678794 );",
+				"\tx = x*k + k.yx;",
+				"\treturn -1.0 + 2.0*fract( 16.0 * k*fract( x.x*x.y*(x.x+x.y)) );",
+			"}",
+			"",
+			"vec3 noised (in vec2 p) { // return gradient noise (in x) and its derivatives (in yz)",
+				"\tvec2 i = floor( p );",
+				"\tvec2 f = fract( p );",
+			"#if 1",
+				"\t// quintic interpolation",
+				"\tvec2 u = f*f*f*(f*(f*6.0-15.0)+10.0);",
+				"\tvec2 du = 30.0*f*f*(f*(f-2.0)+1.0);",
+			"#else",
+				"\t// cubic interpolation",
+				"\tvec2 u = f*f*(3.0-2.0*f);",
+				"\tvec2 du = 6.0*f*(1.0-f);",
+			"#endif    ",
+				"\t",
+				"\tvec2 ga = hash( i + vec2(0.0,0.0) );",
+				"\tvec2 gb = hash( i + vec2(1.0,0.0) );",
+				"\tvec2 gc = hash( i + vec2(0.0,1.0) );",
+				"\tvec2 gd = hash( i + vec2(1.0,1.0) );",
+				"\t",
+				"\tfloat va = dot( ga, f - vec2(0.0,0.0) );",
+				"\tfloat vb = dot( gb, f - vec2(1.0,0.0) );",
+				"\tfloat vc = dot( gc, f - vec2(0.0,1.0) );",
+				"\tfloat vd = dot( gd, f - vec2(1.0,1.0) );",
+				"\t",
+				"\treturn vec3( va + u.x*(vb-va) + u.y*(vc-va) + u.x*u.y*(va-vb-vc+vd),   // value",
+				"\t             ga + u.x*(gb-ga) + u.y*(gc-ga) + u.x*u.y*(ga-gb-gc+gd) +  // derivatives",
+				"\t             du * (u.yx*(va-vb-vc+vd) + vec2(vb,vc) - va));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Gradient noise 2D with derivatives by IQ -https://www.shadertoy.com/view/XdXBRH."
+	},
+
+	"Noise: Gradient 3D": {
+		"prefix": ["Gradient Noise 3D"],
+		"body": [
+			"vec3 hash(vec3 p) { // replace this by something better. really. do.",
+				"\tp = vec3( dot(p,vec3(127.1,311.7, 74.7)),",
+				"\t          dot(p,vec3(269.5,183.3,246.1)),",
+				"\t          dot(p,vec3(113.5,271.9,124.6)));",
+				"\t",
+				"\treturn -1.0 + 2.0*fract(sin(p)*43758.5453123);",
+			"}",
+			"",
+			"float noise( in vec3 p ) {",
+				"\tvec3 i = floor( p );",
+				"\tvec3 f = fract( p );",
+				"\t",
+				"\tvec3 u = f*f*(3.0-2.0*f);",
+				"\t",
+				"\treturn mix( mix( mix( dot( hash( i + vec3(0.0,0.0,0.0) ), f - vec3(0.0,0.0,0.0) ), ",
+				"\t                      dot( hash( i + vec3(1.0,0.0,0.0) ), f - vec3(1.0,0.0,0.0) ), u.x),",
+				"\t                 mix( dot( hash( i + vec3(0.0,1.0,0.0) ), f - vec3(0.0,1.0,0.0) ), ",
+				"\t                      dot( hash( i + vec3(1.0,1.0,0.0) ), f - vec3(1.0,1.0,0.0) ), u.x), u.y),",
+				"\t            mix( mix( dot( hash( i + vec3(0.0,0.0,1.0) ), f - vec3(0.0,0.0,1.0) ), ",
+				"\t                      dot( hash( i + vec3(1.0,0.0,1.0) ), f - vec3(1.0,0.0,1.0) ), u.x),",
+				"\t                 mix( dot( hash( i + vec3(0.0,1.0,1.0) ), f - vec3(0.0,1.0,1.0) ), ",
+				"\t                      dot( hash( i + vec3(1.0,1.0,1.0) ), f - vec3(1.0,1.0,1.0) ), u.x), u.y), u.z );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Gradient noise 3D by IQ - https://www.shadertoy.com/view/Xsl3Dl."
+	},
+
+	"Noise: Gradient 3D + Derivatives": {
+		"prefix": ["Gradient Noise 3D + Derivatives"],
+		"body": [
+			"vec3 hash (vec3 p) { // replace this by something better. really. do",
+				"\tp = vec3( dot(p,vec3(127.1,311.7, 74.7)),",
+				"\tdot(p,vec3(269.5,183.3,246.1)),",
+				"\tdot(p,vec3(113.5,271.9,124.6)));",
+				"\t",
+				"\treturn -1.0 + 2.0*fract(sin(p)*43758.5453123);",
+			"}",
+			"",
+			"vec4 noised (in vec3 x) { // return value noise (in x) and its derivatives (in yzw)",
+				"\t// grid",
+				"\tvec3 i = floor(x);",
+				"\tvec3 w = fract(x);",
+				"\t",
+				"\t#if 1",
+				"\t// quintic interpolant",
+				"\tvec3 u = w*w*w*(w*(w*6.0-15.0)+10.0);",
+				"\tvec3 du = 30.0*w*w*(w*(w-2.0)+1.0);",
+				"\t#else",
+				"\t// cubic interpolant",
+				"\tvec3 u = w*w*(3.0-2.0*w);",
+				"\tvec3 du = 6.0*w*(1.0-w);",
+				"\t#endif    ",
+				"\t",
+				"\t// gradients",
+				"\tvec3 ga = hash( i+vec3(0.0,0.0,0.0) );",
+				"\tvec3 gb = hash( i+vec3(1.0,0.0,0.0) );",
+				"\tvec3 gc = hash( i+vec3(0.0,1.0,0.0) );",
+				"\tvec3 gd = hash( i+vec3(1.0,1.0,0.0) );",
+				"\tvec3 ge = hash( i+vec3(0.0,0.0,1.0) );",
+				"\tvec3 gf = hash( i+vec3(1.0,0.0,1.0) );",
+				"\tvec3 gg = hash( i+vec3(0.0,1.0,1.0) );",
+				"\tvec3 gh = hash( i+vec3(1.0,1.0,1.0) );",
+				"\t",
+				"\t// projections",
+				"\tfloat va = dot( ga, w-vec3(0.0,0.0,0.0) );",
+				"\tfloat vb = dot( gb, w-vec3(1.0,0.0,0.0) );",
+				"\tfloat vc = dot( gc, w-vec3(0.0,1.0,0.0) );",
+				"\tfloat vd = dot( gd, w-vec3(1.0,1.0,0.0) );",
+				"\tfloat ve = dot( ge, w-vec3(0.0,0.0,1.0) );",
+				"\tfloat vf = dot( gf, w-vec3(1.0,0.0,1.0) );",
+				"\tfloat vg = dot( gg, w-vec3(0.0,1.0,1.0) );",
+				"\tfloat vh = dot( gh, w-vec3(1.0,1.0,1.0) );",
+				"\t",
+				"\t// interpolations",
+				"\treturn vec4( va + u.x*(vb-va) + u.y*(vc-va) + u.z*(ve-va) + u.x*u.y*(va-vb-vc+vd) + u.y*u.z*(va-vc-ve+vg) + u.z*u.x*(va-vb-ve+vf) + (-va+vb+vc-vd+ve-vf-vg+vh)*u.x*u.y*u.z,    // value",
+				"\t             ga + u.x*(gb-ga) + u.y*(gc-ga) + u.z*(ge-ga) + u.x*u.y*(ga-gb-gc+gd) + u.y*u.z*(ga-gc-ge+gg) + u.z*u.x*(ga-gb-ge+gf) + (-ga+gb+gc-gd+ge-gf-gg+gh)*u.x*u.y*u.z +   // derivatives",
+				"\t             du * (vec3(vb,vc,ve) - va + u.yzx*vec3(va-vb-vc+vd,va-vc-ve+vg,va-vb-ve+vf) + u.zxy*vec3(va-vb-ve+vf,va-vb-vc+vd,va-vc-ve+vg) + u.yzx*u.zxy*(-va+vb+vc-vd+ve-vf-vg+vh) ));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Gradient noise 3D with derivatives by IQ - https://www.shadertoy.com/view/4dffRH."
+	},
+
+	"Noise: Simplex 2D": {
+		"prefix": ["Simplex Noise 2D"],
+		"body": [
+			"vec2 hash (vec2 p) { // replace this by something better",
+				"\tp = vec2( dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)) );",
+				"\treturn -1.0 + 2.0*fract(sin(p)*43758.5453123);",
+			"}",
+			"",
+			"float noise (in vec2 p) {",
+				"\tconst float K1 = 0.366025404; // (sqrt(3)-1)/2;",
+				"\tconst float K2 = 0.211324865; // (3-sqrt(3))/6;",
+				"\t",
+				"\tvec2  i = floor( p + (p.x+p.y)*K1 );",
+				"\tvec2  a = p - i + (i.x+i.y)*K2;",
+				"\tfloat m = step(a.y,a.x); ",
+				"\tvec2  o = vec2(m,1.0-m);",
+				"\tvec2  b = a - o + K2;",
+				"\tvec2  c = a - 1.0 + 2.0*K2;",
+				"\tvec3  h = max( 0.5-vec3(dot(a,a), dot(b,b), dot(c,c) ), 0.0 );",
+				"\tvec3  n = h*h*h*h*vec3( dot(a,hash(i+0.0)), dot(b,hash(i+o)), dot(c,hash(i+1.0)));",
+				"\treturn dot( n, vec3(70.0) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Simplex noise 2D by IQ - https://www.shadertoy.com/view/Msf3WH."
+	},
+
+	"Noise: Value 2D": {
+		"prefix": ["Value Noise 2D"],
+		"body": [
+			"float hash (vec2 p) { // replace this by something better",
+				"\tp  = 50.0*fract( p*0.3183099 + vec2(0.71,0.113));",
+				"\treturn -1.0+2.0*fract( p.x*p.y*(p.x+p.y) );",
+			"}",
+			"",
+			"float noise (in vec2 p) {",
+				"\tvec2 i = floor( p );",
+				"\tvec2 f = fract( p );",
+				"\t",
+				"\tvec2 u = f*f*(3.0-2.0*f);",
+				"\t",
+				"\treturn mix( mix( hash( i + vec2(0.0,0.0) ), ",
+				"\t                 hash( i + vec2(1.0,0.0) ), u.x),",
+				"\t            mix( hash( i + vec2(0.0,1.0) ), ",
+				"\t                 hash( i + vec2(1.0,1.0) ), u.x), u.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Value noise 2D by IQ - https://www.shadertoy.com/view/lsf3WH."
+	},
+
+	"Noise: Value 2D + Derivatives": {
+		"prefix": ["Value Noise 2D + Derivatives"],
+		"body": [
+			"float hash (in vec2 p)  { // replace this by something better",
+				"\tp  = 50.0*fract( p*0.3183099 + vec2(0.71,0.113));",
+				"\treturn -1.0+2.0*fract( p.x*p.y*(p.x+p.y) );",
+			"}",
+			"",
+			"vec3 noised (in vec2 p) { // return value noise (in x) and its derivatives (in yz)",
+				"\tvec2 i = floor( p );",
+				"\tvec2 f = fract( p );",
+				"\t",
+			"#if 1",
+				"\t// quintic interpolation",
+				"\tvec2 u = f*f*f*(f*(f*6.0-15.0)+10.0);",
+				"\tvec2 du = 30.0*f*f*(f*(f-2.0)+1.0);",
+			"#else",
+				"\t// cubic interpolation",
+				"\tvec2 u = f*f*(3.0-2.0*f);",
+				"\tvec2 du = 6.0*f*(1.0-f);",
+			"#endif    ",
+				"\t",
+				"\tfloat va = hash( i + vec2(0.0,0.0) );",
+				"\tfloat vb = hash( i + vec2(1.0,0.0) );",
+				"\tfloat vc = hash( i + vec2(0.0,1.0) );",
+				"\tfloat vd = hash( i + vec2(1.0,1.0) );",
+				"\t",
+				"\tfloat k0 = va;",
+				"\tfloat k1 = vb - va;",
+				"\tfloat k2 = vc - va;",
+				"\tfloat k4 = va - vb - vc + vd;",
+				"\t",
+				"\treturn vec3( va+(vb-va)*u.x+(vc-va)*u.y+(va-vb-vc+vd)*u.x*u.y, // value",
+				"\t             du*(u.yx*(va-vb-vc+vd) + vec2(vb,vc) - va) );     // derivative",
+			"}",
+			"",
+			"",
+		],
+		"description": "Value noise 2D with derivatives by IQ - https://www.shadertoy.com/view/4dXBRH."
+	},
+
+	"Noise: Value 3D": {
+		"prefix": ["Value Noise 3D"],
+		"body": [
+			"float hash (vec3 p)  { // replace this by something better",
+				"\tp  = fract( p*0.3183099+.1 );",
+				"\tp *= 17.0;",
+				"\treturn fract( p.x*p.y*p.z*(p.x+p.y+p.z) );",
+			"}",
+			"",
+			"float noise (in vec3 x) {",
+				"\tvec3 i = floor(x);",
+				"\tvec3 f = fract(x);",
+				"\tf = f*f*(3.0-2.0*f);",
+				"\t",
+				"\treturn mix(mix(mix( hash(i+vec3(0,0,0)), ",
+				"\t                    hash(i+vec3(1,0,0)),f.x),",
+				"\t               mix( hash(i+vec3(0,1,0)), ",
+				"\t                    hash(i+vec3(1,1,0)),f.x),f.y),",
+				"\t           mix(mix( hash(i+vec3(0,0,1)), ",
+				"\t                    hash(i+vec3(1,0,1)),f.x),",
+				"\t               mix( hash(i+vec3(0,1,1)), ",
+				"\t                    hash(i+vec3(1,1,1)),f.x),f.y),f.z);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Value noise 3D by IQ - https://www.shadertoy.com/view/4sfGzS."
+	},
+
+	"Noise: Value 3D + Derivatives": {
+		"prefix": ["Value Noise 3D + Derivatives"],
+		"body": [
+			"float hash(vec3 p) { // replace this by something better",
+				"\tp  = 50.0*fract( p*0.3183099 + vec3(0.71,0.113,0.419));",
+				"\treturn -1.0+2.0*fract( p.x*p.y*p.z*(p.x+p.y+p.z) );",
+			"}",
+			"",
+			"vec4 noised (in vec3 x) { // return value noise (in x) and its derivatives (in yzw)",
+				"\tvec3 i = floor(x);",
+				"\tvec3 w = fract(x);",
+			"#if 1",
+				"\t// quintic interpolation",
+				"\tvec3 u = w*w*w*(w*(w*6.0-15.0)+10.0);",
+				"\tvec3 du = 30.0*w*w*(w*(w-2.0)+1.0);",
+			"#else",
+				"\t// cubic interpolation",
+				"\tvec3 u = w*w*(3.0-2.0*w);",
+				"\tvec3 du = 6.0*w*(1.0-w);",
+			"#endif",
+				"\t",
+				"\tfloat a = hash(i+vec3(0.0,0.0,0.0));",
+				"\tfloat b = hash(i+vec3(1.0,0.0,0.0));",
+				"\tfloat c = hash(i+vec3(0.0,1.0,0.0));",
+				"\tfloat d = hash(i+vec3(1.0,1.0,0.0));",
+				"\tfloat e = hash(i+vec3(0.0,0.0,1.0));",
+				"\tfloat f = hash(i+vec3(1.0,0.0,1.0));",
+				"\tfloat g = hash(i+vec3(0.0,1.0,1.0));",
+				"\tfloat h = hash(i+vec3(1.0,1.0,1.0));",
+				"\t",
+				"\tfloat k0 =   a;",
+				"\tfloat k1 =   b - a;",
+				"\tfloat k2 =   c - a;",
+				"\tfloat k3 =   e - a;",
+				"\tfloat k4 =   a - b - c + d;",
+				"\tfloat k5 =   a - c - e + g;",
+				"\tfloat k6 =   a - b - e + f;",
+				"\tfloat k7 = - a + b + c - d + e - f - g + h;",
+				"\t",
+				"\treturn vec4( k0 + k1*u.x + k2*u.y + k3*u.z + k4*u.x*u.y + k5*u.y*u.z + k6*u.z*u.x + k7*u.x*u.y*u.z, ",
+				"\tdu * vec3( k1 + k4*u.y + k6*u.z + k7*u.y*u.z,",
+				"\tk2 + k5*u.z + k4*u.x + k7*u.z*u.x,",
+				"\tk3 + k6*u.x + k5*u.y + k7*u.x*u.y ) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Value noise 3D with derivatives by IQ - https://www.shadertoy.com/view/XsXfRH."
+	},
+
+	"Noise: Vernoni Noise 2D (IQ)": {
+		"prefix": ["Vernoni Noise 2D"],
+		"body": [
+			"vec3 hash3 (vec2 p) {",
+				"\tvec3 q = vec3( dot(p,vec2(127.1,311.7)), ",
+				"\tdot(p,vec2(269.5,183.3)), ",
+				"\tdot(p,vec2(419.2,371.9)) );",
+				"\treturn fract(sin(q)*43758.5453);",
+			"}",
+			"",
+			"float voronoise (in vec2 p, float u, float v) {",
+				"\tfloat k = 1.0+63.0*pow(1.0-v,6.0);",
+				"\t",
+				"\tvec2 i = floor(p);",
+				"\tvec2 f = fract(p);",
+				"\t",
+				"\tvec2 a = vec2(0.0,0.0);",
+				"\tfor( int y=-2; y<=2; y++ )",
+				"\tfor( int x=-2; x<=2; x++ )",
+				"\t{",
+					"\t\tvec2  g = vec2( x, y );",
+					"\t\tvec3  o = hash3( i + g )*vec3(u,u,1.0);",
+					"\t\tvec2  d = g - f + o.xy;",
+					"\t\tfloat w = pow( 1.0-smoothstep(0.0,1.414,length(d)), k );",
+					"\t\ta += vec2(o.z*w,w);",
+				"\t}",
+				"\treturn a.x/a.y;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Veroni noise 2D by IQ - https://iquilezles.org/www/articles/voronoise/voronoise.htm"
+	},
+
+	"Noise: Wave 2D": {
+		"prefix": ["Wave Noise 2D"],
+		"body": [
+			"// You should replace this hash by one that you like and meets your needs. This one is here just as example and should not be used in production.",
+			"vec2 g( vec2 n ) { return sin(n.x*n.y*vec2(12,17)+vec2(1,2)); }",
+			"//vec2 g( vec2 n ) { return sin(n.x*n.y+vec2(0,1.571)); } // if you want the gradients to lay on a circle",
+			"",
+			"float noise (vec2 p) {",
+				"\tconst float kF = 2.0;  // make 6 to see worms",
+				"\tvec2 i = floor(p);",
+				"\tvec2 f = fract(p);",
+				"\tf = f*f*(3.0-2.0*f);",
+				"\treturn mix(mix(sin(kF*dot(p,g(i+vec2(0,0)))),",
+				"\tsin(kF*dot(p,g(i+vec2(1,0)))),f.x),",
+				"\tmix(sin(kF*dot(p,g(i+vec2(0,1)))),",
+				"\tsin(kF*dot(p,g(i+vec2(1,1)))),f.x),f.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Wave noise 2D by IQ - https://www.shadertoy.com/view/tldSRj."
+	},
+
+	////////////////////
+	// COLOR PALETTES //
+	////////////////////
+
+	"Palette: IQ": {
+		"prefix": ["Color Palettes from IQ"],
+		"body": [
+			"vec3 palette (in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d) { return a + b*cos( 6.28318*(c*t+d) ); }",
+			"",
+			"",
+			"col = palette(p.x, vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,1.0),vec3(0.0,0.33,0.67));",
+			"col = palette(p.x, vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,1.0),vec3(0.0,0.10,0.20));",
+			"col = palette(p.x, vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,1.0),vec3(0.3,0.20,0.20));",
+			"col = palette(p.x, vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,0.5),vec3(0.8,0.90,0.30));",
+			"col = palette(p.x, vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,0.7,0.4),vec3(0.0,0.15,0.20));",
+			"col = palette(p.x, vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(2.0,1.0,0.0),vec3(0.5,0.20,0.25));",
+			"col = palette(p.x, vec3(0.8,0.5,0.4),vec3(0.2,0.4,0.2),vec3(2.0,1.0,1.0),vec3(0.0,0.25,0.25));",
+		],
+		"description": "Some color palettes by IQ."
+	},
+
+	///////////////////////////////
+	// 2D Signed Distance Fields //
+	///////////////////////////////
+
+	// Many More Here: https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
+
+	"SDF 2D: Circle": {
+		"prefix": ["SDF Circle"],
+		"body": [
+			"float sdCircle (vec2 p, float r) {",
+				"\treturn length(p) - r;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a circle."
+	},
+
+	"SDF 2D: Equilateral Triangle ": {
+		"prefix": ["SDF Equilateral Triangle"],
+		"body": [
+			"float sdEquilateralTriangle (in vec2 p) {",
+				"\tconst float k = sqrt(3.0);",
+				"\tp.x = abs(p.x) - 1.0;",
+				"\tp.y = p.y + 1.0/k;",
+				"\tif( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;",
+				"\tp.x -= clamp( p.x, -2.0, 0.0 );",
+				"\treturn -length(p)*sign(p.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an equilateral triangle ."
+	},
+
+	"SDF 2D: Line Segment": {
+		"prefix": ["SDF Line Segment"],
+		"body": [
+			"float sdSegment (in vec2 p, in vec2 a, in vec2 b) {",
+				"\tvec2 pa = p-a, ba = b-a;",
+				"\tfloat h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );",
+				"\treturn length( pa - ba*h );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a line segment."
+	},
+
+	"SDF 2D: Parallelogram ": {
+		"prefix": ["SDF Parallelogram"],
+		"body": [
+			"float sdParallelogram (in vec2 p, float wi, float he, float sk) {",
+				"\tvec2 e = vec2(sk,he);",
+				"\tp = (p.y<0.0)?-p:p;",
+				"\tvec2  w = p - e; w.x -= clamp(w.x,-wi,wi);",
+				"\tvec2  d = vec2(dot(w,w), -w.y);",
+				"\tfloat s = p.x*e.y - p.y*e.x;",
+				"\tp = (s<0.0)?-p:p;",
+				"\tvec2  v = p - vec2(wi,0); v -= e*clamp(dot(v,e)/dot(e,e),-1.0,1.0);",
+				"\td = min( d, vec2(dot(v,v), wi*he-abs(s)));",
+				"\treturn sqrt(d.x)*sign(-d.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a parallelogram ."
+	},
+
+	"SDF 2D: Polygon": {
+		"prefix": ["SDF Polygon"],
+		"body": [
+			"float sdPolygon (vec2 position, float radius, float sides) {",
+				"\tposition = position * 2.0 - 1.0;",
+				"\tfloat angle = atan(position.x, position.y);",
+				"\tfloat slice = PI * 2.0 / sides;",
+				"\treturn step(radius, cos(floor(0.5 + angle / slice) * slice - angle) * length(position));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an n-sided star / polygon."
+	},
+
+	"SDF 2D: Polygon / Star": {
+		"prefix": ["SDF Polystar", "SDF Star"],
+		"body": [
+			"float sdPolystar (vec2 uv, vec2 o, float n, float R, float star) {",
+				"\tvec2 uv2 = uv - o;",
+				"\tfloat N = 2.0 * n;",
+				"\tfloat starN = (star * (n/2.0 - 1.0) + 1.0);",
+				"\tfloat a = (PI *1.5 + atan(uv.y,uv.x)) / (2.0 * PI);",
+				"\ta = ((int(a*N) % 2) * fract(a * N) + (int(a*N + 3) % 2) * (1.0 - fract(a * N))) * PI / n;",
+				"\treturn distance(uv, vec2(0.0)) - R * cos(PI*starN / n) / cos(a*starN);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an n-sided star / polygon."
+	},
+
+	"SDF 2D: Isosceles Trapezium": {
+		"prefix": ["SDF Isosceles Trapezium"],
+		"body": [
+			"float sdTrapezium (in vec2 p, in float r1, float r2, float he) {",
+				"\tvec2 k1 = vec2(r2,he);",
+				"\tvec2 k2 = vec2(r2-r1,2.0*he);",
+				"\tp.x = abs(p.x);",
+				"\tvec2 ca = vec2(p.x-min(p.x,(p.y<0.0)?r1:r2), abs(p.y)-he);",
+				"\tvec2 cb = p - k1 + k2*clamp( dot(k1-p,k2)/dot2(k2), 0.0, 1.0 );",
+				"\tfloat s = (cb.x<0.0 && ca.y<0.0) ? -1.0 : 1.0;",
+				"\treturn s*sqrt( min(dot2(ca),dot2(cb)) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an isosceles trapezium."
+	},
+
+	"SDF 2D: Isosceles Triangle": {
+		"prefix": ["SDF Isosceles Triangle"],
+		"body": [
+			"float sdTriangleIsosceles (in vec2 p, in vec2 q) {",
+				"\tp.x = abs(p.x);",
+				"\tvec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );",
+				"\tvec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );",
+				"\tfloat s = -sign( q.y );",
+				"\tvec2 d = min( vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),",
+				"\t              vec2( dot(b,b), s*(p.y-q.y) ));",
+				"\treturn -sqrt(d.x)*sign(d.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a isosceles triangle."
+	},	
+
+	"SDF 2D: Rectangle": {
+		"prefix": ["SDF Rectangle"],
+		"body": [
+			"float sdRectangle (in vec2 p, in vec2 b) {",
+				"\tvec2 d = abs(p)-b;",
+				"\treturn length(max(d,0.0)) + min(max(d.x,d.y),0.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rectangle."
+	},
+
+	"SDF 2D: Rectangle w. Orientation": {
+		"prefix": ["SDF Rectangle"],
+		"body": [
+			"float sdRectangle (in vec2 p, in vec2 a, in vec2 b, float th) {",
+				"\tfloat l = length(b-a);",
+				"\tvec2  d = (b-a)/l;",
+				"\tvec2  q = (p-(a+b)*0.5);",
+				"\t      q = mat2(d.x,-d.y,d.y,d.x)*q;",
+				"\t      q = abs(q)-vec2(l,th)*0.5;",
+				"\treturn length(max(q,0.0)) + min(max(q.x,q.y),0.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rectangle with arbitary orientation."
+	},
+
+	"SDF 2D: Rectangle - Rounded": {
+		"prefix": ["SDF Rounded Rectangle"],
+		"body": [
+			"float sdRoundedRect (in vec2 p, in vec2 b, in vec4 r) {",
+				"\tr.xy = (p.x>0.0)?r.xy : r.zw;",
+				"\tr.x  = (p.y>0.0)?r.x  : r.y;",
+				"\tvec2 q = abs(p)-b+r.x;",
+				"\treturn min(max(q.x,q.y),0.0) + length(max(q,0.0)) - r.x;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rounded rectangle."
+	},
+
+	"SDF 2D: Rhombus": {
+		"prefix": ["SDF 2D Rhombus"],
+		"body": [
+			"float sdRhombus (in vec2 p, in vec2 b) {",
+				"\tvec2 q = abs(p);",
+				"\tfloat h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);",
+				"\tfloat d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );",
+				"\treturn d * sign( q.x*b.y + q.y*b.x - b.x*b.y );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rhombus."
+	},
+
+	"SDF 2D: Triangle": {
+		"prefix": ["SDF Triangle"],
+		"body": [
+			"float sdTriangle (in vec2 p, in vec2 p0, in vec2 p1, in vec2 p2) {",
+				"\tvec2 e0 = p1-p0, e1 = p2-p1, e2 = p0-p2;",
+				"\tvec2 v0 = p -p0, v1 = p -p1, v2 = p -p2;",
+				"\tvec2 pq0 = v0 - e0*clamp( dot(v0,e0)/dot(e0,e0), 0.0, 1.0 );",
+				"\tvec2 pq1 = v1 - e1*clamp( dot(v1,e1)/dot(e1,e1), 0.0, 1.0 );",
+				"\tvec2 pq2 = v2 - e2*clamp( dot(v2,e2)/dot(e2,e2), 0.0, 1.0 );",
+				"\tfloat s = sign( e0.x*e2.y - e0.y*e2.x );",
+				"\tvec2 d = min(min(vec2(dot(pq0,pq0), s*(v0.x*e0.y-v0.y*e0.x)),",
+				"\t                 vec2(dot(pq1,pq1), s*(v1.x*e1.y-v1.y*e1.x))),",
+				"\t                 vec2(dot(pq2,pq2), s*(v2.x*e2.y-v2.y*e2.x)));",
+				"\treturn -sqrt(d.x)*sign(d.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a triangle."
+	},
+
+	///////////////////////////////
+	// 3D Signed Distance Fields //
+	///////////////////////////////
+
+	"SDF: Map": {
+		"prefix": ["SDF Map Empty Function"],
+		"body": [
+			"float map (vec3 p) {",
+				"",
+				"\t$0",
+				"",
+			"}",
+			"",
+			"",
+		],
+		"description": "Empty function for the total scene of signed distance field operations."
+	},
+
+	"SDF: Empty": {
+		"prefix": ["SDF Empty"],
+		"body": [
+			"float empty (vec3 p) {",
+				"",
+				"\tfloat d = $0",
+				"\t",
+				"\treturn d;",
+				"",
+			"}",
+			"",
+			"",
+		],
+		"description": "A combined group of signed distance field operations."
+	},
+
+	//
+
+	"SDF: Box": {
+		"prefix": ["SDF Box Primitive", "Signed Distance Field", "Cuboid Primitive"],
+		"body": [
+			"float sdBox (vec3 p, vec3 b) {",
+				"\tvec3 d = abs(p) - b;",
+				"\treturn min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a box."
+	},
+
+	"SDF: Box Wireframe": {
+		"prefix": ["SDF Wireframe Box Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdBoundingBox (vec3 p, vec3 b, float e) {",
+			"\tp =      abs(p  )-b;",
+			"\tvec3 q = abs(p+e)-e;",
+			"\treturn min(min(",
+			"\t\tlength(max(vec3(p.x,q.y,q.z),0.0))+min(max(p.x,max(q.y,q.z)),0.0),",
+			"\t\tlength(max(vec3(q.x,p.y,q.z),0.0))+min(max(q.x,max(p.y,q.z)),0.0)),",
+			"\t\tlength(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a bounding box / box wireframe."
+	},
+
+	"SDF: Box - Rounded": {
+		"prefix": ["SDF Rounded Box Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdRoundBox (vec3 p, vec3 b, float r) {",
+				"\tvec3 q = abs(p) - b;",
+				"\treturn length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0) - r;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rounded box."
+	},
+
+	"SDF: Capsule": {
+		"prefix": ["SDF Capsule Primitive", "SDF Line Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdVerticalCapsule (vec3 p, float h, float r) {",
+				"\tp.y -= clamp( p.y, 0.0, h );",
+				"\treturn length( p ) - r;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a vertial capsule"
+	},
+
+	"SDF: Capsule w. Orientation": {
+		"prefix": ["SDF Capsule Primitive", "SDF Line Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCapsule (vec3 p, vec3 a, vec3 b, float r) {",
+				"\tvec3 pa = p-a, ba = b-a;",
+				"\tfloat h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );",
+				"\treturn length( pa - ba*h ) - r;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a capsule at an arbitary orientation."
+	},
+
+	"SDF: Chain Link": {
+		"prefix": ["SDF Chain Link Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdLink (vec3 p, float le, float r1, float r2) {",
+				"\tvec3 q = vec3( p.x, max(abs(p.y)-le,0.0), p.z );",
+				"\treturn length(vec2(length(q.xy)-r1,q.z)) - r2;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a hexagonal prism."
+	},
+
+	"SDF: Cone": {
+		"prefix": ["SDF Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCone (in vec3 p, in vec2 c, float h) {",
+				"\tvec2 q = h*vec2(c.x,-c.y)/c.y;",
+				"\tvec2 w = vec2( length(p.xz), p.y );",
+				"\t",
+				"\tvec2 a = w - q*clamp( dot(w,q)/dot(q,q), 0.0, 1.0 );",
+				"\tvec2 b = w - q*vec2( clamp( w.x/q.x, 0.0, 1.0 ), 1.0 );",
+				"\tfloat k = sign( q.y );",
+				"\tfloat d = min(dot( a, a ),dot(b, b));",
+				"\tfloat s = max( k*(w.x*q.y-w.y*q.x),k*(w.y-q.y)  );",
+				"\treturn sqrt(d)*sign(s);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a vertical cone."
+	},
+
+	"SDF: Cone - Capped": {
+		"prefix": ["SDF Capped Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"float dot2 (in vec2 v) { return dot(v,v); }",
+			"",
+			"float sdCappedCone (in vec3 p, in float h, in float r1, in float r2) {",
+				"\tvec2 q = vec2( length(p.xz), p.y );",
+				"\t",
+				"\tvec2 k1 = vec2(r2,h);",
+				"\tvec2 k2 = vec2(r2-r1,2.0*h);",
+				"\tvec2 ca = vec2(q.x-min(q.x,(q.y < 0.0)?r1:r2), abs(q.y)-h);",
+				"\tvec2 cb = q - k1 + k2*clamp( dot(k1-q,k2)/dot2(k2), 0.0, 1.0 );",
+				"\tfloat s = (cb.x < 0.0 && ca.y < 0.0) ? -1.0 : 1.0;",
+				"\treturn s*sqrt( min(dot2(ca),dot2(cb)) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a capped cone."
+	},
+
+	"SDF: Cone - Capped w. Orientation": {
+		"prefix": ["SDF Capped Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCappedCone (vec3 p, vec3 a, vec3 b, float ra, float rb) {",
+				"\tfloat rba  = rb-ra;",
+				"\tfloat baba = dot(b-a,b-a);",
+				"\tfloat papa = dot(p-a,p-a);",
+				"\tfloat paba = dot(p-a,b-a)/baba;",
+				"\t",
+				"\tfloat x = sqrt( papa - paba*paba*baba );",
+				"\t",
+				"\tfloat cax = max(0.0,x-((paba<0.5)?ra:rb));",
+				"\tfloat cay = abs(paba-0.5)-0.5;",
+				"\t",
+				"\tfloat k = rba*rba + baba;",
+				"\tfloat f = clamp( (rba*(x-ra)+paba*baba)/k, 0.0, 1.0 );",
+				"\t",
+				"\tfloat cbx = x-ra - f*rba;",
+				"\tfloat cby = paba - f;",
+				"\t",
+				"\tfloat s = (cbx < 0.0 && cay < 0.0) ? -1.0 : 1.0;",
+				"\t",
+				"\treturn s*sqrt(min(cax*cax + cay*cay*baba, cbx*cbx + cby*cby*baba));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a capped cone at an arbitary orientation."
+	},
+
+	"SDF: Cone - Infinite": {
+		"prefix": ["SDF Infinite Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"// c is the sin/cos of the angle",
+			"float sdCone (vec3 p, vec2 c) {",
+				"\tvec2 q = vec2( length(p.xz), -p.y );",
+				"\tfloat d = length(q-c*max(dot(q,c), 0.0));",
+				"\treturn d * ((q.x*c.y-q.y*c.x<0.0)?-1.0:1.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an infinite cone."
+	},
+
+	"SDF: Cone - Not Exact": {
+		"prefix": ["SDF Fast Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"// (Not Exact)",
+			"float sdCone (vec3 p, vec2 c, float h) {",
+				"\tfloat q = length(p.xz);",
+				"\treturn max(dot(c.xy,vec2(q,p.y)),-h-p.y);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a cone (not exact)."
+	},
+
+	"SDF: Cone - Rounded": {
+		"prefix": ["SDF Rounded Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdRoundCone (in vec3 p, in float r1, float r2, float h) {",
+				"\tvec2 q = vec2( length(p.xz), p.y );",
+				"\t",
+				"\tfloat b = (r1-r2)/h;",
+				"\tfloat a = sqrt(1.0-b*b);",
+				"\tfloat k = dot(q,vec2(-b,a));",
+				"\t",
+				"\tif( k < 0.0 ) return length(q) - r1;",
+				"\tif( k > a*h ) return length(q-vec2(0.0,h)) - r2;",
+				"\t",
+				"\treturn dot(q, vec2(a,b) ) - r1;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a round cone."
+	},
+
+	"SDF: Cone - Rounded & Tilted": {
+		"prefix": ["SDF Rounded / Tilted Cone Primitive", "Signed Distance Field"],
+		"body": [
+			"float dot2( in vec3 v ) { return dot(v,v); }",
+			"",
+			"float sdRoundCone(vec3 p, vec3 a, vec3 b, float r1, float r2) {",
+				"\t",
+				"\t// sampling independent computations (only depend on shape)",
+				"\tvec3  ba = b - a;",
+				"\tfloat l2 = dot(ba,ba);",
+				"\tfloat rr = r1 - r2;",
+				"\tfloat a2 = l2 - rr*rr;",
+				"\tfloat il2 = 1.0/l2;",
+				"\t",
+				"\t// sampling dependant computations",
+				"\tvec3 pa = p - a;",
+				"\tfloat y = dot(pa,ba);",
+				"\tfloat z = y - l2;",
+				"\tfloat x2 = dot2( pa*l2 - ba*y );",
+				"\tfloat y2 = y*y*l2;",
+				"\tfloat z2 = z*z*l2;",
+				"\t",
+				"\t// single square root!",
+				"\tfloat k = sign(rr)*rr*rr*x2;",
+				"\tif( sign(z)*a2*z2 > k ) return  sqrt(x2 + z2)        *il2 - r2;",
+				"\tif( sign(y)*a2*y2 < k ) return  sqrt(x2 + y2)        *il2 - r1;",
+				"\t                        return (sqrt(x2*a2*il2)+y*rr)*il2 - r1;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a round cone."
+	},
+
+	"SDF: Cylinder": {
+		"prefix": ["SDF Cylinder Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCylinder( vec3 p, vec2 h ) {",
+				"\tvec2 d = abs(vec2(length(p.xz),p.y)) - h;",
+				"\treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a vertical cylinder."
+	},
+
+	"SDF: Cylinder - Infinite": {
+		"prefix": ["SDF Infinite Cylinder Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCylinder (vec3 p, vec3 c) { return length(p.xz-c.xy)-c.z; }",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an infinite cylinder."
+	},
+
+	"SDF: Cylinder - Rounded": {
+		"prefix": ["SDF Rounded Cylinder Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdRoundedCylinder (vec3 p, float ra, float rb, float h) {",
+				"\tvec2 d = vec2( length(p.xz)-2.0*ra+rb, abs(p.y) - h );",
+				"\treturn min(max(d.x,d.y),0.0) + length(max(d,0.0)) - rb;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rounded cylinder."
+	},
+
+	"SDF: Cylinder w. Orientation": {
+		"prefix": ["SDF Rotated Cylinder Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCylinder (vec3 p, vec3 a, vec3 b, float r) {",
+				"\tvec3 pa = p - a;",
+				"\tvec3 ba = b - a;",
+				"\tfloat baba = dot(ba,ba);",
+				"\tfloat paba = dot(pa,ba);",
+				"\t",
+				"\tfloat x = length(pa*baba-ba*paba) - r*baba;",
+				"\tfloat y = abs(paba-baba*0.5)-baba*0.5;",
+				"\tfloat x2 = x*x;",
+				"\tfloat y2 = y*y*baba;",
+				"\tfloat d = (max(x,y)<0.0)?-min(x2,y2):(((x>0.0)?x2:0.0)+((y>0.0)?y2:0.0));",
+				"\treturn sign(d)*sqrt(abs(d))/baba;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a vertical cylinder at an arbitary orientation."
+	},
+
+	"SDF: Ellipsoid": {
+		"prefix": ["SDF Ellipsoid Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdEllipsoid (in vec3 p, in vec3 r) { // approximated",
+				"\tfloat k0 = length(p/r);",
+				"\tfloat k1 = length(p/(r*r));",
+				"\treturn k0*(k0-1.0)/k1;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field (approx) of an ellipsoid."
+	},
+
+	"SDF: Hexagonal Prism": {
+		"prefix": ["SDF Hexagonal Prism Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdHexPrism(vec3 p, vec2 h) {",
+				"\tvec3 q = abs(p);",
+				"\tconst vec3 k = vec3(-0.8660254, 0.5, 0.57735);",
+				"\tp = abs(p);",
+				"\tp.xy -= 2.0*min(dot(k.xy, p.xy), 0.0)*k.xy;",
+				"\tvec2 d = vec2(length(p.xy - vec2(clamp(p.x, -k.z*h.x, k.z*h.x), h.x))*sign(p.y - h.x), p.z-h.y);",
+				"\treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a hexagonal prism."
+	},
+
+	"SDF: Menger Cube": {
+		"prefix": ["SDF Menger Fractal Cube"],
+		"body": [
+			"float maxcomp(in vec3 p ) { return max(p.x,max(p.y,p.z)); }",
+			"float sdBox (vec3 p, vec3 b) {",
+				"\tvec3  di = abs(p) - b;",
+				"\tfloat mc = maxcomp(di);",
+				"\treturn min(mc,length(max(di,0.0)));",
+			"}",
+			"",
+			"const mat3 ma = mat3( 0.60, 0.00,  0.80,",
+			"                      0.00, 1.00,  0.00,",
+			"                     -0.80, 0.00,  0.60 );",
+			"",
+			"vec4 sdMengerCube (in vec3 p) {",
+				"\tfloat d = sdBox(p,vec3(1.0));",
+				"\tvec4 res = vec4( d, 1.0, 0.0, 0.0 );",
+				"\t",
+				"\tfloat ani = smoothstep( -0.2, 0.2, -cos(0.5*iTime) );",
+				"\tfloat off = 1.5*sin( 0.01*iTime );",
+				"\t",
+				"\tfloat s = 1.0;",
+				"\tfor (int m=0; m<4; m++) {",
+					"\t\tp = mix( p, ma*(p+off), ani );",
+					"\t\t",
+					"\t\tvec3 a = mod( p*s, 2.0 )-1.0;",
+					"\t\ts *= 3.0;",
+					"\t\tvec3 r = abs(1.0 - 3.0*abs(a));",
+					"\t\tfloat da = max(r.x,r.y);",
+					"\t\tfloat db = max(r.y,r.z);",
+					"\t\tfloat dc = max(r.z,r.x);",
+					"\t\tfloat c = (min(da,min(db,dc))-1.0)/s;",
+					"\t\t",
+					"\t\tif (c>d) {",
+						"\t\t\td = c;",
+						"\t\t\tres = vec4(d, min(res.y,0.2*da*db*dc), (1.0+float(m))/4.0, 0.0);",
+					"\t\t}",
+				"\t}",
+				"\t",
+				"\treturn res;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a menger cube. IQ: https://www.shadertoy.com/view/4sX3Rn"
+	},
+
+	"SDF: Octagonal Prism": {
+		"prefix": ["SDF Octagonal Prism Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdOctogonPrism (in vec3 p, in float r, float h) {",
+				"\tconst vec3 k = vec3(-0.9238795325 /* sqrt(2+sqrt(2))/2 */, 0.3826834323 /* sqrt(2-sqrt(2))/2 */, 0.4142135623 /* sqrt(2)-1 */); ",
+				"\t// reflections",
+				"\tp = abs(p);",
+				"\tp.xy -= 2.0*min(dot(vec2( k.x,k.y),p.xy),0.0)*vec2( k.x,k.y);",
+				"\tp.xy -= 2.0*min(dot(vec2(-k.x,k.y),p.xy),0.0)*vec2(-k.x,k.y);",
+				"\t// polygon side",
+				"\tp.xy -= vec2(clamp(p.x, -k.z*r, k.z*r), r);",
+				"\tvec2 d = vec2( length(p.xy)*sign(p.y), p.z-h );",
+				"\treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a octagonal prism."
+	},
+
+	"SDF: Octahedron": {
+		"prefix": ["SDF Octahedron Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdOctahedron (vec3 p, float s) {",
+				"\t",
+				"\tp = abs(p);",
+				"\tfloat m = p.x + p.y + p.z - s;",
+				"\t",
+				"\t// exact distance",
+				"\t#if 0",
+				"\tvec3 o = min(3.0*p - m, 0.0);",
+				"\to = max(6.0*p - m*2.0 - o*3.0 + (o.x+o.y+o.z), 0.0);",
+				"\treturn length(p - s*o/(o.x+o.y+o.z));",
+				"\t#endif",
+				"\t",
+				"\t// exact distance",
+				"\t#if 1",
+				"\tvec3 q;",
+				"\t     if( 3.0*p.x < m ) q = p.xyz;",
+				"\telse if( 3.0*p.y < m ) q = p.yzx;",
+				"\telse if( 3.0*p.z < m ) q = p.zxy;",
+				"\telse return m*0.57735027;",
+				"\tfloat k = clamp(0.5*(q.z-q.y+s),0.0,s); ",
+				"\treturn length(vec3(q.x,q.y-s+k,q.z-k)); ",
+				"\t#endif",
+				"\t",
+				"\t// bound, not exact",
+				"\t#if 0",
+				"\treturn m*0.57735027;",
+				"\t#endif",
+				"\t",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an octahedron."
+	},
+
+	"SDF: Octahedron - Not Exact": {
+		"prefix": ["SDF Fast Octahedron Primitive", "Signed Distance Field"],
+		"body": [
+			"// (Not Exact)",
+			"float sdOctahedron (vec3 p, float s) {",
+				"\tp = abs(p);",
+				"\treturn (p.x+p.y+p.z-s)*0.57735027;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of an octahedron (not exact)."
+	},
+
+	"SDF: Plane": {
+		"prefix": ["SDF Plane Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdPlane (vec3 p) { return p.y; }",
+			"",
+		],
+		"description": "Signed distance field of a plane."
+	},
+
+	"SDF: Plane w. Orientation": {
+		"prefix": ["SDF Rotated Plane Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdPlane (vec3 p, vec3 n, float h) {",
+				"// n must be normalized",
+				"return dot(p,n) + h;",
+			"}",
+			"",
+		],
+		"description": "Signed distance field of a plane  at an arbitary orientation."
+	},
+
+	"SDF: Quad": {
+		"prefix": ["SDF Quad Primitive", "Signed Distance Field"],
+		"body": [
+			"float dot2 (in vec3 v) { return dot(v,v); }",
+			"",
+			"float udQuad( vec3 p, vec3 a, vec3 b, vec3 c, vec3 d ) {",
+				"\tvec3 ba = b - a; vec3 pa = p - a;",
+				"\tvec3 cb = c - b; vec3 pb = p - b;",
+				"\tvec3 dc = d - c; vec3 pc = p - c;",
+				"\tvec3 ad = a - d; vec3 pd = p - d;",
+				"\tvec3 nor = cross( ba, ad );",
+				"\t",
+				"\treturn sqrt(",
+					"\t\t(sign(dot(cross(ba,nor),pa)) +",
+					"\t\tsign(dot(cross(cb,nor),pb)) +",
+					"\t\tsign(dot(cross(dc,nor),pc)) +",
+					"\t\tsign(dot(cross(ad,nor),pd))<3.0)",
+					"\t\t?",
+					"\t\tmin( min( min(",
+					"\t\tdot2(ba*clamp(dot(ba,pa)/dot2(ba),0.0,1.0)-pa),",
+					"\t\tdot2(cb*clamp(dot(cb,pb)/dot2(cb),0.0,1.0)-pb) ),",
+					"\t\tdot2(dc*clamp(dot(dc,pc)/dot2(dc),0.0,1.0)-pc) ),",
+					"\t\tdot2(ad*clamp(dot(ad,pd)/dot2(ad),0.0,1.0)-pd) )",
+					"\t\t:",
+					"\t\tdot(nor,pa)*dot(nor,pa)/dot2(nor) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a quad."
+	},
+
+	"SDF: Rhombus": {
+		"prefix": ["SDF 3D Rhombus Primitive", "Signed Distance Field"],
+		"body": [
+			"float ndot (in vec2 a, in vec2 b) { return a.x*b.x - a.y*b.y; }",
+			"",
+			"// la,lb=semi axis, h=height, ra=corner",
+			"float sdRhombus(vec3 p, float la, float lb, float h, float ra) {",
+				"\tp = abs(p);",
+				"\tvec2 b = vec2(la,lb);",
+				"\tfloat f = clamp( (ndot(b,b-2.0*p.xz))/dot(b,b), -1.0, 1.0 );",
+				"\tvec2 q = vec2(length(p.xz-0.5*b*vec2(1.0-f,1.0+f))*sign(p.x*b.y+p.z*b.x-b.x*b.y)-ra, p.y-h);",
+				"\treturn min(max(q.x,q.y),0.0) + length(max(q,0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a rhombus."
+	},
+
+	"SDF: Solid Angle": {
+		"prefix": ["SDF Solid Angle Primitive", "Signed Distance Field"],
+		"body": [
+			"// c is the sin/cos of the desired cone angle",
+			"float sdSolidAngle(vec3 pos, vec2 c, float ra) {",
+				"\tvec2 p = vec2( length(pos.xz), pos.y );",
+				"\tfloat l = length(p) - ra;",
+				"\tfloat m = length(p - c*clamp(dot(p,c),0.0,ra) );",
+				"\treturn max(l,m*sign(c.y*p.x-c.x*p.y));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a solid angle."
+	},
+
+	"SDF: Sphere": {
+		"prefix": ["SDF Sphere Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdSphere(vec3 p, float s) { return length(p) - s; }",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a sphere."
+	},
+
+	"SDF: Square Pyramid": {
+		"prefix": ["SDF Square Pyramid Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdPyramid (in vec3 p, in float h) {",
+				"\t",
+				"\tfloat m2 = h*h + 0.25;",
+				"\t",
+				"\t// symmetry",
+				"\tp.xz = abs(p.xz);",
+				"\tp.xz = (p.z>p.x) ? p.zx : p.xz;",
+				"\tp.xz -= 0.5;",
+				"\t",
+				"\t// project into face plane (2D)",
+				"\tvec3 q = vec3( p.z, h*p.y - 0.5*p.x, h*p.x + 0.5*p.y);",
+				"\t",
+				"\tfloat s = max(-q.x,0.0);",
+				"\tfloat t = clamp( (q.y-0.5*p.z)/(m2+0.25), 0.0, 1.0 );",
+				"\t",
+				"\tfloat a = m2*(q.x+s)*(q.x+s) + q.y*q.y;",
+				"\tfloat b = m2*(q.x+0.5*t)*(q.x+0.5*t) + (q.y-m2*t)*(q.y-m2*t);",
+				"\t",
+				"\tfloat d2 = min(q.y,-q.x*m2-q.y*0.5) > 0.0 ? 0.0 : min(a,b);",
+				"\t",
+				"\t// recover 3D and scale, and add sign",
+				"\treturn sqrt( (d2+q.z*q.z)/m2 ) * sign(max(q.z,-p.y));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a square based pyramid."
+	},
+
+	"SDF: Torus": {
+		"prefix": ["SDF Torus Primitive", "SDF Doughnut Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdTorus (vec3 p, vec2 t) { return length(vec2(length(p.xz)-t.x,p.y))-t.y; }",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a torus."
+	},
+
+	"SDF: Torus Capped": {
+		"prefix": ["SDF Capped Torus Primitive", "SDF Capped Doughnut Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdCappedTorus (in vec3 p, in vec2 sc, in float ra, in float rb) {",
+				"p.x = abs(p.x);",
+				"float k = (sc.y*p.x>sc.x*p.y) ? dot(p.xy,sc) : length(p.xy);",
+				"return sqrt( dot(p,p) + ra*ra - 2.0*ra*k ) - rb;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a capped torus."
+	},
+
+	"SDF: Triangle": {
+		"prefix": ["SDF Triangle Primitive", "Signed Distance Field"],
+		"body": [
+			"float dot2 (in vec3 v) { return dot(v,v); }",
+			"",
+			"float udTriangle (vec3 p, vec3 a, vec3 b, vec3 c) {",
+			"\tvec3 ba = b - a; vec3 pa = p - a;",
+			"\tvec3 cb = c - b; vec3 pb = p - b;",
+			"\tvec3 ac = a - c; vec3 pc = p - c;",
+			"\tvec3 nor = cross( ba, ac );",
+			"\t",
+			"\treturn sqrt(",
+			"\t\t(sign(dot(cross(ba,nor),pa)) +",
+			"\t\tsign(dot(cross(cb,nor),pb)) +",
+			"\t\tsign(dot(cross(ac,nor),pc))<2.0)",
+			"\t\t?",
+			"\t\tmin( min(",
+			"\t\tdot2(ba*clamp(dot(ba,pa)/dot2(ba),0.0,1.0)-pa),",
+			"\t\tdot2(cb*clamp(dot(cb,pb)/dot2(cb),0.0,1.0)-pb) ),",
+			"\t\tdot2(ac*clamp(dot(ac,pc)/dot2(ac),0.0,1.0)-pc) )",
+			"\t\t:",
+			"\t\tdot(nor,pa)*dot(nor,pa)/dot2(nor) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a triangle."
+	},
+
+	"SDF: Triangular Prism": {
+		"prefix": ["SDF Triangular Prism Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdTriPrism (vec3 p, vec2 h) {",
+				"\tconst float k = sqrt(3.0);",
+				"\th.x *= 0.5*k;",
+				"\tp.xy /= h.x;",
+				"\tp.x = abs(p.x) - 1.0;",
+				"\tp.y = p.y + 1.0/k;",
+				"\tif( p.x+k*p.y>0.0 ) p.xy=vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;",
+				"\tp.x -= clamp( p.x, -2.0, 0.0 );",
+				"\tfloat d1 = length(p.xy)*sign(-p.y)*h.x;",
+				"\tfloat d2 = abs(p.z)-h.y;",
+				"\treturn length(max(vec2(d1,d2),0.0)) + min(max(d1,d2), 0.);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a triangular prism."
+	},
+
+	"SDF: Tunnel": {
+		"prefix": ["SDF Tunnel Primitive", "SDF Tube Primitive", "Signed Distance Field"],
+		"body": [
+			"float sdTunnel (vec3 p) { return 1. - length(p.xz); }",
+			"",
+			"",
+		],
+		"description": "Signed distance field of a vertical cylinder."
+	},
+
+	/////////////////////////////////
+	// SDF Boolean Transformations //
+	/////////////////////////////////
+
+	"SDF Boolean: Intersection": {
+		"prefix": ["SDF Boolean Intersection", "Signed Distance Field Intersection"],
+		"body": [
+			"float opIntersect (float d1, float d2) { return max(d1,d2); }",
+			"",
+			"",
+		],
+		"description": "Calculate the intersection of two signed distance fields."
+	},
+
+	"SDF Boolean: Intersection - Smooth": {
+		"prefix": ["SDF Boolean Smooth Intersection", "Signed Distance Field Smooth Intersection"],
+		"body": [
+			"float opSmoothIntersection (float d1, float d2, float k) {",
+				"float h = max(k-abs(d1-d2),0.0);",
+				"return max(d1, d2) + h*h*0.25/k;",
+				"//float h = clamp( 0.5 - 0.5*(d2-d1)/k, 0.0, 1.0 );",
+				"//return mix( d2, d1, h ) + k*h*(1.0-h);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the smooth intersection of two signed distance fields."
+	},
+
+	"SDF Boolean: Subtraction": {
+		"prefix": ["SDF Boolean Subtraction", "Signed Distance Field Subtraction"],
+		"body": [
+			"float opSubtract (float d1, float d2) { return max(-d1,d2); }",
+			"",
+			"",
+		],
+		"description": "Calculate the subtraction of two signed distance fields."
+	},
+
+	"SDF Boolean: Subtraction - Smooth": {
+		"prefix": ["SDF Boolean Smooth Subtraction", "Signed Distance Field Smooth Subtraction"],
+		"body": [
+			"float opSmoothSubtract (float d1, float d2, float k) {",
+				"\tfloat h = max(k-abs(-d1-d2),0.0);",
+				"\treturn max(-d1, d2) + h*h*0.25/k;",
+				"\t//float h = clamp( 0.5 - 0.5*(d2+d1)/k, 0.0, 1.0 );",
+				"\t//return mix( d2, -d1, h ) + k*h*(1.0-h);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the smooth subtraction of two signed distance fields."
+	},
+
+	"SDF Boolean: Union": {
+		"prefix": ["SDF Boolean Union", "Signed Distance Field Union"],
+		"body": [
+			"float opUnion (float d1, float d2) { return min(d1,d2); }",
+			"",
+			"",
+		],
+		"description": "Calculate the union of two signed distance fields."
+	},
+
+	"SDF Boolean: Union - Smooth": {
+		"prefix": ["SDF Boolean Smooth Union", "Signed Distance Field Smooth Union"],
+		"body": [
+			"float opSmoothUnion (float d1, float d2, float k) {",
+				"\tfloat h = max(k-abs(d1-d2),0.0);",
+				"\treturn min(d1, d2) - h*h*0.25/k;",
+				"\t//float h = clamp( 0.5 + 0.5*(d2-d1)/k, 0.0, 1.0 );",
+				"\t//return mix( d2, d1, h ) - k*h*(1.0-h);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the smooth union of two signed distance fields."
+	},
+
+	///////////////////
+	// SDF Operations//
+	///////////////////
+
+	"SDF Operation: Elongate": {
+		"prefix": ["SDF Operation Elongate"],
+		"body": [
+			"vec4 opElongate (in vec3 p, in vec3 h) {",
+				"\t//return vec4( p-clamp(p,-h,h), 0.0 ); // faster, but produces zero in the interior elongated box",
+				"\tvec3 q = abs(p)-h;",
+				"\treturn vec4( max(q,0.0), min(max(q.x,max(q.y,q.z)),0.0) );",
+			"}",
+			"",
+			"",
+		],
+		"description": "Elongate a signed distance field."
+	},
+
+	"SDF Operation: Extrude": {
+		"prefix": ["SDF Operation Extrude"],
+		"body": [
+			"float opExtrude (in vec3 p, in float sdf, in float h) {",
+				"\tvec2 w = vec2( sdf, abs(p.z) - h );",
+				"\treturn min(max(w.x,w.y),0.0) + length(max(w,0.0));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Elongate a signed distance field."
+	},
+
+	"SDF Operation: Onion": {
+		"prefix": ["SDF Operation Onion"],
+		"body": [
+			"float opOnion (in float d, in float h) { return abs(d)-h; }",
+			"",
+			"",
+		],
+		"description": "Calculate onion skins of a signed distance field."
+	},
+
+	"SDF Operation: Repeat Radial": {
+		"prefix": ["SDF Operation Repeat Radially", "SDF Operation Array 3D"],
+		"body": [
+			"vec3 opRadRepeat (vec3 p, float n) {",
+				"\tfloat a = atan(p.z, p.x);",
+				"\tfloat r = distance(p.xz, vec2(0.0));",
+				"\tfloat s = 2.0 * 3.1415927 / n;",
+				"\ta = mod(a+s*0.5,s)-s*0.5;",
+				"\treturn vec3(r*cos(a), p.y, r*sin(a));",
+			"}",
+			"",
+			"",
+		],
+		"description": "Radially repeat a signed distance field around the y-zis."
+	},
+
+	"SDF Operation: Repeat 3D": {
+		"prefix": ["SDF Operation Repeat 3D", "SDF Operation Array 3D"],
+		"body": [
+			"vec3 opRepeat (in vec3 p, in float s) { return mod(p+s*0.5,s)-s*0.5; }",
+			"",
+			"",
+		],
+		"description": "Infinitely repeat a signed distance field periodically across a domain."
+	},
+
+	"SDF Operation: Repeat 2D": {
+		"prefix": ["SDF Operation Repeat 2D", "SDF Operation Array 2D"],
+		"body": [
+			"vec2 opRepeat (in vec2 p, in float s) { return mod(p+s*0.5,s)-s*0.5; }",
+			"",
+			"",
+		],
+		"description": "Infinitely repeat a signed distance field periodically across a domain."
+	},
+
+	"SDF Operation: Repeat 1D": {
+		"prefix": ["SDF Operation Repeat 1D", "SDF Operation Array 1D"],
+		"body": [
+			"float opRepeat (in float p, in float s) { return mod(p+s*0.5,s)-s*0.5; }",
+			"",
+			"",
+		],
+		"description": "Infinitely repeat a signed distance field periodically across a domain."
+	},
+
+	"SDF Operation: Repeat Bound": {
+		"prefix": ["SDF Operation Repeat (Bound)", "SDF Operation Array (Bound)"],
+		"body": [
+			"vec3 opRepeat (in vec3 p, in float s, in vec3 lima, in vec3 limb) { return p-s*clamp(round(p/s),lima,limb); }",
+			"",
+			"",
+		],
+		"description": "Repeat a signed distance field periodically within a bound domain."
+	},
+
+	"SDF Operation: Revolve": {
+		"prefix": ["SDF Operation Revolve"],
+		"body": [
+			"vec2 opRevolve (in vec3 p, float w) { return vec2( length(p.xz) - w, p.y ); }",
+			"",
+			"",
+		],
+		"description": "Elongate a signed distance field."
+	},
+
+	"SDF Operation: Round": {
+		"prefix": ["SDF Operation Round", "SDF Operation Smooth"],
+		"body": [
+			"float opRound (in float d, in float h) { return d - h; }",
+			"",
+			"",
+		],
+		"description": "Round a signed distance field."
+	},
+
+	//
+	// Bend, Displacement and Twist to be added.
+	//
+
+	//////////////////////
+	// Sphere Functions //
+	//////////////////////
+
+	"Sphere: Ambient Occulsion (Analytic)": {
+		"prefix": ["Sphere Ambient Occulsion Analytic"],
+		"body": [
+			"float sphereAO (vec3 p, vec3 nor, vec3 pos, float rad) {",
+				"\tvec3  di = pos - p;",
+				"\tfloat l  = length(di);",
+				"\tfloat nl = dot(nor,di/l);",
+				"\tfloat h  = l/rad;",
+				"\tfloat h2 = h*h;",
+				"\tfloat k2 = 1.0 - h2*nl*nl;",
+				"\t",
+				"\tfloat res = max(0.0,nl)/h2;",
+				"\tif( k2 > 0.0 ) { // approx. for penetration",
+					"\t\tres = clamp(0.5*(nl*h+1.0)/h2,0.0,1.0);",
+					"\t\tres = sqrt( res*res*res );",
+				"\t}",
+				"\treturn res;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the ambient occulsion of a sphere analytically."
+	},
+
+	"Sphere: Density (Analytic)": {
+		"prefix": ["Sphere Density Analytic"],
+		"body": [
+			"float sphereDensity (vec3 ro, vec3 rd, vec3 pos, float rad, float dbuffer) {",
+				"\tfloat ndbuffer = dbuffer/rad;",
+				"\tvec3  rc = (ro - pos)/rad;",
+				"\t",
+				"\tfloat b = dot(rd,rc);",
+				"\tfloat c = dot(rc,rc) - 1.0;",
+				"\tfloat h = b*b - c;",
+				"\tif( h<0.0 ) return 0.0;",
+				"\th = sqrt( h );",
+				"\tfloat t1 = -b - h;",
+				"\tfloat t2 = -b + h;",
+				"\t",
+				"\tif( t2<0.0 || t1>ndbuffer ) return 0.0;",
+				"\tt1 = max( t1, 0.0 );",
+				"\tt2 = min( t2, ndbuffer );",
+				"\t",
+				"\tfloat i1 = -(c*t1 + b*t1*t1 + t1*t1*t1/3.0);",
+				"\tfloat i2 = -(c*t2 + b*t2*t2 + t2*t2*t2/3.0);",
+				"\treturn (i2-i1)*(3.0/4.0);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculates the density of a sphere analytically."
+	},
+
+	"Sphere: Intersection (Analytic)": {
+		"prefix": ["Sphere Intersection Analytic"],
+		"body": [
+			"float sphereIntersect (vec3 ro, vec3 rd, vec3 pos, float rad) {",
+				"\tvec3 oc = ro - pos;",
+				"\tfloat b = dot( oc, rd );",
+				"\tfloat c = dot( oc, oc ) - rad*rad;",
+				"\tfloat h = b*b - c;",
+				"\tif( h<0.0 ) return -1.0;",
+				"\th = sqrt( h );",
+				"\treturn -b - h;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculates the intersection of a sphere with a ray analytically."
+	},
+
+	"Sphere: Motion Blur (Analytic)": {
+		"prefix": ["Sphere Motion Blur Analytic"],
+		"body": [
+			"vec2 sphereMotion (vec3 ro, vec3 rd, vec3 pos, float rad, vec3 ve, out vec3 nor) {",
+				"\tfloat t = -1.0;",
+				"\tfloat s = 0.0;",
+				"\tnor = vec3(0.0);",
+				"\t",
+				"\tvec3  rc = ro - pos;",
+				"\tfloat A = dot(rc,rd);",
+				"\tfloat B = dot(rc,rc) - rad*rad;",
+				"\tfloat C = dot(ve,ve);",
+				"\tfloat D = dot(rc,ve);",
+				"\tfloat E = dot(rd,ve);",
+				"\tfloat aab = A*A - B;",
+				"\tfloat eec = E*E - C;",
+				"\tfloat aed = A*E - D;",
+				"\tfloat k = aed*aed - eec*aab;",
+				"\t",
+				"\tif( k>0.0 ) {",
+					"\t\tk = sqrt(k);",
+					"\t\tfloat hb = (aed - k)/eec;",
+					"\t\tfloat ha = (aed + k)/eec;",
+					"\t\tfloat ta = max( 0.0, ha );",
+					"\t\tfloat tb = min( 1.0, hb );",
+					"\t\t",
+					"\t\tif( ta < tb ) {",
+						"\t\t\tta = 0.5*(ta+tb);",
+						"\t\t\tfloat k1 = A - E*ta;",
+						"\t\t\tfloat k2 = B + C*ta*ta - 2.0*D*ta;",
+						"\t\t\tt = -k1 - sqrt( k1*k1 - k2 );",
+						"\t\t\ts = 2.0*(tb - ta);",
+						"\t\t\t",
+						"\t\t\tvec3 pa = ro + rd*t;",
+						"\t\t\tvec3 pb = pos + ta*ve;",
+						"\t\t\tnor = normalize( pa - pb );",
+					"\t\t}",
+				"\t}",
+				"\t",
+				"\treturn vec2(t,s);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the motion blur of a sphere analytically."
+	},
+
+	"Sphere: Projection (Analytic)": {
+		"prefix": ["Sphere Projection Analytic"],
+		"body": [
+			"const float PI = 3.141593;",
+			"",
+			"float sphereProjection (vec3 pos, float rad, in mat4 cam, float fle) {",
+				"\tvec3  o = (cam*vec4(pos,1.0)).xyz;",
+				"\t",
+				"\tfloat r2 = rad*rad;",
+				"\tfloat z2 = o.z*o.z;",
+				"\tfloat l2 = dot(o,o);",
+				"\tfloat k1 = l2-r2;",
+				"\tfloat k2 = r2-z2;",
+				"\t",
+				"\treturn -PI*fle*fle*r2*sqrt(abs(k1/k2))/k2;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Analytically project a sphere onto a camera view."
+	},
+
+	"Sphere: Soft Shadow (Analytic)": {
+		"prefix": ["Sphere Soft Shadow Analytic"],
+		"body": [
+			"float sphereSoftShadow (vec3 ro, vec3 rd, vec3 pos, float rad, float k) {",
+				"\tvec3 oc = ro - pos;",
+				"\tfloat r = rad*rad;",
+				"\tfloat b = dot( oc, rd );",
+				"\tfloat c = dot( oc, oc ) - r;",
+				"\tfloat h = b*b - c;",
+				"\tfloat d = -rad + sqrt( max(0.0,r-h));",
+				"\tfloat t = -b   - sqrt( max(0.0,h) );",
+				"\treturn (t<0.0)?1.0:smoothstep(0.0,1.0,k*d/t);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the soft shadow of a sphere analytically."
+	},
+
+	"Sphere: Visibility (Analytic)": {
+		"prefix": ["Sphere Visibility Analytic"],
+		"body": [
+			"int sphereVisibility (vec3 posA, float rA, vec3 posB, float rB, vec3 c) {",
+				"\tvec3 ac = posA - c;",
+				"\tvec3 bc = posB - c;",
+				"\tfloat ia = 1.0/length(ac);",
+				"\tfloat ib = 1.0/length(bc);",
+				"\tfloat k0 = dot(ac,bc)*ia*ib;",
+				"\tfloat k1 = rA*ia;",
+				"\tfloat k2 = rB*ib;",
+				"\tfloat m1 = k0*k0 + k1*k1 + k2*k2;",
+				"\tfloat m2 = 2.0*k0*k1*k2;",
+				"\t",
+				"\t     if( m1 + m2 - 1.0 < 0.0 ) return 1;",
+				"\telse if( m1 - m2 - 1.0 < 0.0 ) return 2;",
+				"\treturn 3;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Calculate the overlap between two spheres analytically."
+	},		
+
+	////////////////////////////////
+	// Texture Mapping / Sampling //
+	////////////////////////////////
+
+	"Texture Map: Tri-Planar": {
+		"prefix": ["Tri-Planar Texture Map"],
+		"body": [
+			"vec3 tex3D (sampler2D tex, in vec3 p, in vec3 n) {",
+				"\tn = max((abs(n) - 0.2)*7., 0.001); // max(abs(n), 0.001), etc.",
+				"\tn /= (n.x + n.y + n.z );  ",
+				"\treturn (texture(tex, p.yz)*n.x + texture(tex, p.zx)*n.y + texture(tex, p.xy)*n.z).xyz;",
+			"}",
+			"",
+			"",
+		],
+		"description": "Tri-Planar blending function by Shane - 'Based on an old Nvidia tutorial'."
+	},
+
+	"Bump Map: Tri-Planar": {
+		"prefix": ["Tri-Planar Bump Map"],
+		"body": [
+			"float getGrey(vec3 p){ return p.x*0.299 + p.y*0.587 + p.z*0.114; }",
+			"",
+			"vec3 tex3D (sampler2D tex, in vec3 p, in vec3 n) {",
+				"\tn = max((abs(n) - 0.2)*7., 0.001); // max(abs(n), 0.001), etc.",
+				"\tn /= (n.x + n.y + n.z );  ",
+				"\treturn (texture(tex, p.yz)*n.x + texture(tex, p.zx)*n.y + texture(tex, p.xy)*n.z).xyz;",
+			"}",
+			"",
+			"vec3 bump3D (sampler2D tex, in vec3 p, in vec3 nor, float bumpfactor) {",
+				"\tconst float eps = 0.001;",
+				"\tfloat ref = getGrey(tex3D(tex, p , nor));                 ",
+				"\tvec3 grad = vec3( getGrey(tex3D(tex, vec3(p.x - eps, p.y, p.z), nor)) - ref,",
+				"\t                  getGrey(tex3D(tex, vec3(p.x, p.y - eps, p.z), nor)) - ref,",
+				"\t                  getGrey(tex3D(tex, vec3(p.x, p.y, p.z - eps), nor)) - ref )/eps;",
+				"\t",
+				"\tgrad -= nor*dot(nor, grad);          ",
+				"\t",
+				"\treturn normalize(nor + grad*bumpfactor);",
+				"\t",
+			"}",
+			"",
+			"",
+		],
+		"description": "Tri-Planar bump map by Shane."
+	},
+
+	"Normal Map: From Bump": {
+		"prefix": ["Normal Map from Bump"],
+		"body": [
+			"float getBump(vec2 uv) { return texture(tex0, uv).r; }",
+			"",
+			"vec4 normFromBump(vec2 uv, vec2 resolution, float scale) { //xyz - normal, w - bump",
+				"\tvec2 step = 1. / resolution;",
+				"\tfloat bump = getBump(uv);",
+				"\t",
+				"\tvec2 dxy = bump - vec2(",
+				"\tgetBump(uv + vec2(step.x, 0.)), ",
+				"\tgetBump(uv + vec2(0., step.y)));",
+				"\t",
+				"\treturn vec4(normalize(vec3(dxy * scale / step, 1.)), bump);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Tri-Planar bump map by Shane."
+	},
+
+	//////////////
+	// Vector 2 //
+	//////////////
+
+	"Vector 2: Affine Transform": {
+		"prefix": ["Affine Transform"],
+		"body": [
+			"vec2 affineUV(vec2 uv, vec4 affine) {",
+				"\tvec2 p = uv - vec2(0.5) - affine.xy;",
+				"\tp.x *= uRes.x / uRes.y;",
+				"\tvec2 polar = vec2(length(p), atan(p.y, p.x) + affine.z);",
+				"\tuv = polar.x * vec2(sin(polar.y), cos(polar.y));",
+				"\tuv.x /= uRes.x / uRes.y;",
+				"\treturn uv * affine.w + vec2(0.5);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Correctly scale an image texture."
+	},
+
+	"Vector 2: Scale Image": {
+		"prefix": ["Scale Image Coordinates"],
+		"body": [
+			"vec2 scaleImg (vec2 imgRes) { return vUV * uRes / imgRes; }",
+			"",
+			"",
+		],
+		"description": "Correctly scale an image texture."
+	},
+
+	"Vector 2: Scale Image Centered": {
+		"prefix": ["Scale Image Coordinates Centered"],
+		"body": [
+			"vec2 scaleImg (vec2 imgRes) { return (vUV * uRes / imgRes) - (uRes - imgRes) / (uRes); }",
+			"",
+			"",
+		],
+		"description": "Correctly scale an image texture."
+	},
+
+	"Vector 2: Rotation Matrix": {
+		"prefix": ["2D Rotatation Matrix"],
+		"body": [
+			"mat2 m2 (float a) {",
+				"\tfloat c = cos(a); float s = sin(a);",
+				"\treturn mat2(c, s, -s, c);",
+			"}",
+			"",
+			"",
+		],
+		"description": "2D Rotation matrix."
+	},
+
+	//////////////
+	// Vector 3 //
+	//////////////
+
+	"Vector 3: Cartesian to Spherical": {
+		"prefix": ["Spherical Coordinates"],
+		"body": [
+			"vec3 cartToSph (vec3 p) { // Returns vec3(r, theta [0..pi], phi [-pi,pi])",
+				"\tfloat r = length(p);",
+				"\tfloat theta = acos(p.z/r);",
+				"\tfloat phi = atan(p.y,p.x);",
+				"\treturn vec3(r,theta,phi);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Convert cartesian coordinates to spherical coordinates"
+	},
+
+	// ROTATIONS
+
+	"Vector 3: Rotate Axes": {
+		"prefix": ["Rotate 3D"],
+		"body": [
+			"vec3 rot (vec3 p, vec3 axis, float a) { return mix(dot(p,axis)*axis,p,cos(a))+sin(a)*cross(axis,p); }",
+			"",
+			"",
+		],
+		"description": "Efficiently rotates a point around an arbitary axis using Rodrigues' rotation formula. https://en.m.wikipedia.org/wiki/Rodrigues%27_rotation_formula"
+	},
+
+	"Vector 3: Rotate X": {
+		"prefix": ["X Rotate 3D"],
+		"body": [
+			"vec3 rX (vec3 p, float a) {",
+				"\tfloat s = sin(a), c = cos(a);",
+				"\treturn vec3(p.x, c * p.y - s * p.z, s * p.y + c * p.z);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Rotate a point around the X axis by an angle."
+	},
+
+	"Vector 3: Rotate Y": {
+		"prefix": ["Y Rotate 3D"],
+		"body": [
+			"vec3 rY (vec3 p, float a) {",
+				"\tfloat s = sin(a), c = cos(a);",
+				"\treturn vec3(c * p.x + s * p.z, p.y, -s * p.x + c * p.z);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Rotate a point around the Y axis by an angle."
+	},
+
+	"Vector 3: Rotate Z": {
+		"prefix": ["Z Rotate 3D"],
+		"body": [
+			"vec3 rZ (vec3 p, float a) {",
+				"\tfloat s = sin(a), c = cos(a);",
+				"\treturn vec3(c * p.x - s * p.y, s * p.x + c * p.y, p.z);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Rotate a point around the Z axis by an angle."
+	},
+
+	"Vector 3: Rotation Matrix X": {
+		"prefix": ["X Rotatation Matrix"],
+		"body": [
+			"mat3 mX (float theta) {",
+				"\tfloat c = cos(theta);",
+				"\tfloat s = sin(theta);",
+				"\treturn mat3(",
+					"\t\tvec3(1, 0, 0),",
+					"\t\tvec3(0, c, -s),",
+					"\t\tvec3(0, s, c)",
+				"\t);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Rotation matrix around the X axis."
+	},
+
+	"Vector 3: Rotation Matrix Y": {
+		"prefix": ["Y Rotatation Matrix"],
+		"body": [
+			"mat3 mY (float theta) {",
+				"\tfloat c = cos(theta);",
+				"\tfloat s = sin(theta);",
+				"\treturn mat3(",
+					"\t\tvec3(c, 0, s),",
+					"\t\tvec3(0, 1, 0),",
+					"\t\tvec3(-s, 0, c)",
+				"\t);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Rotation matrix around the Y axis."
+	},
+
+	"Vector 3: Rotation Matrix Z": {
+		"prefix": ["Z Rotatation Matrix"],
+		"body": [
+			"mat3 mZ (float theta) {",
+				"\tfloat c = cos(theta);",
+				"\tfloat s = sin(theta);",
+				"\treturn mat3(",
+					"\t\tvec3(c, -s, 0),",
+					"\t\tvec3(s, c, 0),",
+					"\t\tvec3(0, 0, 1)",
+				"\t);",
+			"}",
+			"",
+			"",
+		],
+		"description": "Rotation matrix around the Z axis."
+	},
+
+	/////////////////////////
+	// Shader Boilerplates //
+	/////////////////////////
+
+	"Shader: Ray March Scene": {
+		"prefix": ["Boilderplate Ray March Scene"],
+		"body": [
+			"uniform float uTime;",
+			"uniform vec2 uRes;",
+			"",
+			"vec3 rayDir (float fov) {",
+				"\tvec2 xy = uRes * (vUV - 0.5);",
+				"\tfloat z = uRes.y / tan(3.1415927 * fov / 2.0);",
+				"\treturn normalize(vec3(xy, -z));",
+			"}",
+			"",
+			"// Assumes that the center of the camera is aligned with the negative z axis in view space when calculating the ray marching direction. See rayDirection.",
+			"mat3 viewMatrix(vec3 ro, vec3 center, vec3 up) {",
+				"\tvec3 f = normalize(center - ro);",
+				"\tvec3 s = normalize(cross(f, up));",
+				"\tvec3 u = cross(s, f);",
+				"\treturn mat3(s, u, -f);",
+			"}",
+			"",
+			"float sdBox (vec3 p, vec3 b) {",
+				"\tvec3 d = abs(p) - b;",
+				"\treturn min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));",
+			"}",
+			"",
+			"float map (vec3 p) {",
+			"",
+				"\tfloat d = sdBox(p, vec3(1.0));",
+				"\treturn d;",
+			"",
+			"}",
+			"",
+			"const int MAX_MARCHING_STEPS = 128;",
+			"const float EPSILON = 0.0001;",
+			"",
+			"float march (vec3 ro, vec3 rd, float far) {",
+				"\tfloat d = 0.0;",
+				"\tfor (int i = 0; i < MAX_MARCHING_STEPS; i++) {",
+					"\t\tfloat dist = map(ro + d * rd);",
+					"\t\tif (dist < EPSILON) return d;",
+					"\t\t",
+					"\t\td += dist;",
+					"\t\tif (d >= far) return far;",
+				"\t}",
+				"\treturn far;",
+			"}",
+			"",
+			"// IQ: 'inspired by klems - a way to prevent the compiler from inlining map() 4 times'",
+			"vec3 estNorm (vec3 pos) {",
+				"\tvec3 n = vec3(0.0);",
+				"\tfor (int i=0; i<4; i++) {",
+					"\t\tvec3 e = 0.5773*(2.0*vec3((((i+3)>>1)&1),((i>>1)&1),(i&1))-1.0);",
+					"\t\tn += e * map(pos+0.0005*e).x;",
+				"\t}",
+				"\treturn normalize(n); ",
+			"}",
+			"",
+			"// amb: Ambient, diff: Diffuse, spec: Specular, alpha: Shininess coefficient, p: position of point being lit, eye: the position of the camera,lightPos: the position of the light, lightIntensity: color/intensity of the light",
+			"",
+			"vec3 phongLight (vec3 diff, vec3 spec, float alpha, vec3 p, vec3 ro, vec3 lightPos, vec3 intensity) {",
+				"\tvec3 N = estNorm(p);",
+				"\tvec3 L = normalize(lightPos - p);",
+				"\tvec3 V = normalize(ro - p);",
+				"\tvec3 R = normalize(reflect(-L, N));",
+				"\t",
+				"\tfloat dotLN = dot(L, N);",
+				"\tfloat dotRV = dot(R, V);",
+				"\t",
+				"\tif (dotLN < 0.0) return vec3(0.0, 0.0, 0.0); // Light not visible from this point on the surface",
+				"\tif (dotRV < 0.0) return intensity * (diff * dotLN); // Light reflection in opposite direction as viewer, apply only diffuse",
+				"\treturn intensity * (diff * dotLN + spec * pow(dotRV, alpha));",
+			"}",
+			"",
+			"// amb: Ambient color, diff: Diffuse color, spec: Specular color, alpha: Shininess coefficient, p: position of point being lit, eye: the position of the camera",
+			"",
+			"vec3 phongRig (vec3 amb, vec3 diff, vec3 spec, float alpha, vec3 p, vec3 eye) {",
+				"\t",
+				"\tvec3 ambientLight = 0.5 * vec3(1.0, 1.0, 1.0);",
+				"\tvec3 color = ambientLight * amb;",
+				"\t",
+				"\tvec3 light1Pos = vec3(4.0 * sin(uTime), 2.0, 4.0 * cos(uTime));",
+				"\tvec3 light1Intensity = vec3(0.4, 0.4, 0.4);",
+				"\t",
+				"\tcolor += phongLight(diff, spec, alpha, p, eye, light1Pos, light1Intensity);",
+				"\t",
+				"\tvec3 light2Pos = vec3(2.0 * sin(0.37 * uTime), 2.0 * cos(0.37 * uTime), 2.0);",
+				"\tvec3 light2Intensity = vec3(0.4, 0.4, 0.4);",
+				"\t",
+				"\tcolor += phongLight(diff, spec, alpha, p, eye, light2Pos, light2Intensity);   ",
+				"\t",
+				"\treturn color;",
+				"\t",
+			"}",
+			"",
+			"const float MAX_DIST = 200.0;",
+			"vec3 render () {",
+				"\t",
+				"\tvec3 rd = rayDir(0.25);",
+				"\tvec3 ro = vec3(8.0, 5.0 * sin(0.2 * uTime), 7.0);",
+				"\tvec3 worldDir = viewMatrix(ro, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0)) * rd;",
+				"\t",
+				"\tfloat dist = march(ro, worldDir, MAX_DIST);",
+				"\t",
+				"\tif (dist > MAX_DIST - EPSILON) return vec3(0.0);",
+				"\t",
+				"\tvec3 p = ro + dist * worldDir;",
+				"\t",
+				"\tvec3 amb = (estNorm(p) + vec3(1.0)) / 2.0;",
+				"\tvec3 diff = amb;",
+				"\tvec3 spec = vec3(1.0, 1.0, 1.0);",
+				"\tfloat shininess = 10.0;",
+				"\t",
+				"\tvec3 color = phongRig(amb, diff, spec, shininess, p, ro);",
+				"\t",
+				"\treturn color;",
+				"\t",
+			"}",
+			"",
+			"void main (void) {",
+				"\t",
+				"\tgl_FragColor = vec4(render(), 1.0);",
+				"\t",
+			"}",
+
+			"",
+			"",
+		],
+		"description": "Boilderplates a complete ray march scene with lighting rig and simple sdf."
+	},
+
+}
