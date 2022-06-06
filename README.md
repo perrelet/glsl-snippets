@@ -3,6 +3,41 @@
 Painting by numbers was never so easy...
 
 
+## Index
+
+- [Macros](#macro)
+- [Constructors](#constructor)
+- [Functions](#function)
+- [Uniforms](#uniform)
+- [Blend Modes](#blend-mode)
+- [Blurs](#blur)
+- [Colors](#color)
+- [Composites](#composite)
+- [Curves](#curve)
+- [Environments](#environment)
+- [Filters](#filter)
+- [Hashs](#hash)
+- [Interpolations](#interpolation)
+- [Lightings](#lighting)
+- [Lights](#light)
+- [Maths](#math)
+- [Marchs](#march)
+- [Cameras](#camera)
+- [View Matrixs](#view-matrix)
+- [Renderers](#renderer)
+- [Noises](#noise)
+- [Palettes](#palette)
+- [SDF 2Ds](#sdf-2d)
+- [SDFs](#sdf)
+- [SDF Booleans](#sdf-boolean)
+- [SDF Operations](#sdf-operation)
+- [Spheres](#sphere)
+- [Texture Maps](#texture-map)
+- [Bump Maps](#bump-map)
+- [Normal Maps](#normal-map)
+- [Vector 2s](#vector-2)
+- [Vector 3s](#vector-3)
+- [Shaders](#shader)
 ## Reference
 
 | Prefix | Name | Description |

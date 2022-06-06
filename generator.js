@@ -24,7 +24,7 @@ function snippet_read (err, data) {
     fs.truncate(read_me_file, 0, () => {
 
         doc += "\n\n";
-        doc += "## Reference";
+        doc += "## Index";
         doc += "\n\n";
 
         let groups = {
@@ -43,6 +43,19 @@ function snippet_read (err, data) {
             }
 
         }
+
+        for (let [group, snippets] of Object.entries(groups)) {
+
+            if (group == 'uncat') continue;
+
+            const anchor = group.replace(' ', '-').toLowerCase();
+
+            doc += `- [${group}s](#${anchor})\n`;
+
+        }
+
+        doc += "## Reference";
+        doc += "\n\n";
 
         for (let [group, snippets] of Object.entries(groups)) {
 
