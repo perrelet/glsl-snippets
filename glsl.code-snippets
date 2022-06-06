@@ -1,7 +1,7 @@
 {
 
 	"Main Function": {
-		"prefix": ["Main GLSL Fragment Shader Function"],
+		"prefix": ["main func"],
 		"body": [
 			"void main (void) {",
 			"\t",

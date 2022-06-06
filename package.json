@@ -1,0 +1,22 @@
+{
+  "name": "vscode-snippets-md-gen",
+  "version": "1.0.0",
+  "description": "Generate md documentation from a given vscode snippet file.",
+  "main": "generator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perrelet/glsl-snippets.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/perrelet/glsl-snippets/issues"
+  },
+  "homepage": "https://github.com/perrelet/glsl-snippets#readme",
+  "dependencies": {
+    "hjson": "^3.2.2"
+  }
+}
