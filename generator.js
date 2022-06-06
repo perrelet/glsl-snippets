@@ -24,8 +24,6 @@ function snippet_read (err, data) {
     fs.truncate(read_me_file, 0, () => {
 
         doc += "\n\n";
-        doc += "## Index";
-        doc += "\n\n";
 
         let groups = {
             uncat: [],
@@ -44,12 +42,13 @@ function snippet_read (err, data) {
 
         }
 
+        doc += "## Index";
+        doc += "\n\n";
+
         for (let [group, snippets] of Object.entries(groups)) {
 
             if (group == 'uncat') continue;
-
-            const anchor = group.replace(' ', '-').toLowerCase();
-
+            const anchor = group.replace(' ', '-').toLowerCase() + 's';
             doc += `- [${group}s](#${anchor})\n`;
 
         }
