@@ -1363,6 +1363,8 @@
 				"\treturn kLMStoCONE*(lms*lms*lms);",
 			"}",
 			"",
+			"vec4 oklab_mix(vec4 colA, vec4 colB, float h) { return vec4(oklab_mix(colA.a * colA.rgb, colB.a * colB.rgb, clamp(h, 0.0, 1.0)), mix(colA.a, colB.a, clamp(h, 0.0, 1.0))); }",
+			"",
 			"",
 		],
 		"description": "Cosine interpolatation between two values."
